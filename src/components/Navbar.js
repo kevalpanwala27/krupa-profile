@@ -12,29 +12,46 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (typeof window !== 'undefined') {
-        setScrolled(window.scrollY > 80);
-        
-        // Update active section based on scroll position
+      setScrolled(window.scrollY > 80);
+      
+      // Update active section based on scroll position
         if (typeof document !== 'undefined') {
-          const sections = ['home', 'about', 'products', 'industries', 'why-us', 'clients', 'gallery', 'contact'];
-          const current = sections.find(section => {
-            const element = document.querySelector(`#${section}`);
-            if (element) {
-              const rect = element.getBoundingClientRect();
-              return rect.top <= 100 && rect.bottom >= 100;
-            }
-            return false;
-          });
-          if (current) setActiveSection(current);
+          try {
+      const sections = ['home', 'about', 'products', 'industries', 'why-us', 'clients', 'gallery', 'contact'];
+      const current = sections.find(section => {
+        const element = document.querySelector(`#${section}`);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+                // Adjusted threshold for mobile devices
+                return rect.top <= 150 && rect.bottom >= 150;
+        }
+        return false;
+      });
+      if (current) setActiveSection(current);
+          } catch (error) {
+            console.warn('Error updating active section:', error);
+          }
         }
       }
     };
 
+    // Close mobile menu when scrolling
+    const handleScrollClose = () => {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    };
+
     if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
+      // Add passive listener for better mobile performance
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('scroll', handleScrollClose, { passive: true });
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('scroll', handleScrollClose);
+      };
     }
-  }, []);
+  }, [isOpen]);
 
   const navItems = [
     { name: 'Home', href: '#home' },
@@ -49,12 +66,47 @@ const Navbar = () => {
 
   const scrollToSection = (href) => {
     if (typeof document !== 'undefined') {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+    const element = document.querySelector(href);
+    if (element) {
+        // Close mobile menu first
+        setIsOpen(false);
+        
+        // Add a small delay to ensure menu closes before scrolling
+        setTimeout(() => {
+          element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }, 100);
       }
     }
+  };
+
+  // Enhanced mobile navigation function
+  const handleMobileNavigation = (href) => {
+    // Close mobile menu immediately
     setIsOpen(false);
+    
+    // Small delay to ensure smooth transition
+    setTimeout(() => {
+      if (typeof document !== 'undefined') {
+        const element = document.querySelector(href);
+        if (element) {
+          try {
+            // Try smooth scrolling first
+            element.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          } catch {
+            // Fallback to instant scroll if smooth scrolling fails
+            element.scrollIntoView({ 
+              block: 'start'
+            });
+          }
+        }
+      }
+    }, 150);
   };
 
   const navVariants = {
@@ -74,6 +126,7 @@ const Navbar = () => {
       opacity: 0, 
       height: 0,
       scale: 0.98,
+      y: -10,
       transition: { 
         duration: 0.2,
         ease: [0.25, 0.46, 0.45, 0.94]
@@ -83,6 +136,7 @@ const Navbar = () => {
       opacity: 1, 
       height: "auto",
       scale: 1,
+      y: 0,
       transition: { 
         duration: 0.3,
         ease: [0.25, 0.46, 0.45, 0.94]
@@ -137,8 +191,8 @@ const Navbar = () => {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
             onClick={() => scrollToSection('#home')}
-          >
-            <div className="relative">
+            >
+              <div className="relative">
               <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
                 <span className="text-white font-bold text-lg">K</span>
               </div>
@@ -146,10 +200,10 @@ const Navbar = () => {
             </div>
             <div className="hidden sm:block">
               <h1 className="text-base md:text-lg font-bold text-white leading-tight">
-                Krupa Engineering
+                  Krupa Engineering
               </h1>
               <p className="text-xs text-gray-300 font-medium leading-tight">Innovation & Excellence</p>
-            </div>
+              </div>
           </motion.div>
 
           {/* Professional Desktop Navigation - Centered */}
@@ -179,12 +233,12 @@ const Navbar = () => {
                     
                     {/* Active Indicator */}
                     {activeSection === item.name.toLowerCase().replace(' ', '-') && (
-                      <motion.div
+                  <motion.div 
                         className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-orange-400 rounded-full"
-                        layoutId="activeIndicator"
+                      layoutId="activeIndicator"
                         transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                      />
-                    )}
+                    />
+                  )}
                   </button>
                 </motion.div>
               ))}
@@ -199,10 +253,13 @@ const Navbar = () => {
             initial="hidden"
             animate="visible"
           >
-            <button className="btn-primary text-sm px-5 py-2.5">
+            <button 
+              className="btn-primary text-sm px-5 py-2.5"
+              onClick={() => scrollToSection('#contact')}
+            >
               <span className="flex items-center gap-2">
                 Get Started
-                <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-200" />
+
               </span>
             </button>
           </motion.div>
@@ -226,7 +283,7 @@ const Navbar = () => {
                   <X className="w-5 h-5" />
                 </motion.div>
               ) : (
-                <motion.div
+              <motion.div
                   key="menu"
                   initial={{ rotate: 90, opacity: 0 }}
                   animate={{ rotate: 0, opacity: 1 }}
@@ -234,7 +291,7 @@ const Navbar = () => {
                   transition={{ duration: 0.15 }}
                 >
                   <Menu className="w-5 h-5" />
-                </motion.div>
+              </motion.div>
               )}
             </AnimatePresence>
           </motion.button>
@@ -251,23 +308,24 @@ const Navbar = () => {
               exit="hidden"
             >
               <div className="py-4 space-y-1">
-                {navItems.map((item, index) => (
+                  {navItems.map((item, index) => (
                   <motion.div
-                    key={item.name}
+                      key={item.name}
                     variants={mobileItemVariants}
-                    custom={index}
-                    initial="hidden"
-                    animate="visible"
+                      custom={index}
+                      initial="hidden"
+                      animate="visible"
                   >
                     <button
-                      onClick={() => scrollToSection(item.href)}
-                      className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 text-left ${
+                      onClick={() => handleMobileNavigation(item.href)}
+                      onTouchEnd={() => handleMobileNavigation(item.href)}
+                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm transition-all duration-200 text-left touch-manipulation ${
                         activeSection === item.name.toLowerCase().replace(' ', '-')
                           ? 'text-orange-400 bg-orange-500/15 border border-orange-500/25'
-                          : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                          : 'text-gray-300 hover:bg-white/5 hover:text-white active:bg-white/10'
                       }`}
                     >
-                      {item.name}
+                        {item.name}
                       {activeSection === item.name.toLowerCase().replace(' ', '-') && (
                         <div className="ml-auto w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
                       )}
@@ -276,14 +334,18 @@ const Navbar = () => {
                 ))}
                 
                 {/* Mobile CTA Button */}
-                <motion.div
+                <motion.div 
                   variants={mobileItemVariants}
                   custom={navItems.length}
                   initial="hidden"
                   animate="visible"
                   className="pt-3"
                 >
-                  <button className="w-full btn-primary text-sm px-4 py-2.5">
+                  <button 
+                    className="w-full btn-primary text-sm px-4 py-3 touch-manipulation"
+                    onClick={() => handleMobileNavigation('#contact')}
+                    onTouchEnd={() => handleMobileNavigation('#contact')}
+                  >
                     <span className="flex items-center justify-center gap-2">
                       Get Started
                       <ChevronDown className="w-4 h-4" />

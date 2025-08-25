@@ -68,7 +68,7 @@ const About = () => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
+      transition: { 
         duration: 0.6,
         ease: [0.25, 0.46, 0.45, 0.94]
       }
@@ -78,7 +78,7 @@ const About = () => {
   return (
     <section id="about" className="section-standard bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div className="container-balanced">
-        <motion.div
+          <motion.div 
           className="text-center mb-12"
           variants={containerVariants}
           initial="hidden"
@@ -96,15 +96,15 @@ const About = () => {
         </motion.div>
 
         {/* Enhanced Stats Section */}
-        <motion.div
+          <motion.div 
           className="grid-balanced grid-cols-2 md:grid-cols-4 mb-16"
-          variants={containerVariants}
-          initial="hidden"
+            variants={containerVariants}
+            initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
           {stats.map((stat) => (
-            <motion.div
+            <motion.div 
               key={stat.label}
               className="text-center group"
               variants={itemVariants}
@@ -113,23 +113,23 @@ const About = () => {
             >
               <div className="icon-container mx-auto mb-3">
                 <stat.icon className="w-5 h-5 text-white" />
-              </div>
+                    </div>
               <div className="text-2xl font-bold text-gray-900 mb-1">{stat.number}</div>
               <div className="text-gray-600 text-sm">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
+                </motion.div>
+              ))}
+          </motion.div>
 
         {/* Enhanced Features Grid */}
-        <motion.div
+          <motion.div 
           className="grid-cards mb-16"
-          variants={containerVariants}
-          initial="hidden"
+            variants={containerVariants}
+            initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-        >
+          >
           {features.map((feature) => (
-            <motion.div
+            <motion.div 
               key={feature.title}
               className="card-elevated group"
               variants={itemVariants}
@@ -138,7 +138,7 @@ const About = () => {
             >
               <div className={`icon-container bg-gradient-to-br ${feature.color} mx-auto mb-3`}>
                 <feature.icon className="w-5 h-5 text-white" />
-              </div>
+                    </div>
               <h3 className="heading-sm text-gray-900 mb-2 text-center">
                 {feature.title}
               </h3>
@@ -147,10 +147,10 @@ const About = () => {
               </p>
             </motion.div>
           ))}
-        </motion.div>
+            </motion.div>
 
         {/* Enhanced Company Story Section */}
-        <motion.div
+            <motion.div 
           className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
           variants={containerVariants}
           initial="hidden"
@@ -178,17 +178,17 @@ const About = () => {
               Learn More About Us
             </button>
           </motion.div>
-
-          <motion.div
+          
+          <motion.div 
             className="relative"
             variants={itemVariants}
           >
             <div className="relative">
               <div className="w-full h-80 bg-gradient-to-br from-orange-100 to-red-100 rounded-2xl flex items-center justify-center">
                 <Rocket className="w-24 h-24 text-orange-500" />
-              </div>
+                    </div>
               <div className="absolute -inset-4 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl blur-2xl"></div>
-            </div>
+                  </div>
           </motion.div>
         </motion.div>
       </div>

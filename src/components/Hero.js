@@ -56,30 +56,30 @@ const Hero = () => {
 
   useEffect(() => {
     setIsClient(true);
-    
+
     const handleScroll = () => {
       if (typeof window !== 'undefined') {
-        const scrolled = window.scrollY;
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = (scrolled / maxScroll) * 100;
-        setScrollProgress(progress);
+      const scrolled = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrolled / maxScroll) * 100;
+      setScrollProgress(progress);
       }
     };
 
     if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', handleScroll);
-      
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
     }
   }, []);
 
   const scrollToProducts = () => {
     if (typeof document !== 'undefined') {
-      const element = document.querySelector('#products');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+    const element = document.querySelector('#products');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
       }
     }
   };
@@ -118,8 +118,8 @@ const Hero = () => {
       opacity: 1,
       scale: 1,
       y: 0,
-      transition: {
-        duration: 0.8,
+      transition: { 
+        duration: 0.8, 
         delay: 1.2,
         ease: [0.25, 0.46, 0.45, 0.94],
         type: "spring",
@@ -169,7 +169,7 @@ const Hero = () => {
       
       {/* Refined Floating Elements - Much smaller and subtle */}
         {techGridPositions.map((particle, index) => (
-          <motion.div
+      <motion.div 
             key={`tech-${index}`}
             className="absolute w-1 h-1 bg-orange-400/20 rounded-full"
             style={{
@@ -190,7 +190,7 @@ const Hero = () => {
         ))}
 
         {ambientParticlePositions.map((particle, index) => (
-          <motion.div
+      <motion.div 
             key={`ambient-${index}`}
             className="absolute w-0.5 h-0.5 bg-blue-400/15 rounded-full"
             style={{
@@ -213,11 +213,11 @@ const Hero = () => {
       {/* Centered Main Content */}
       <div className="relative z-10 w-full flex items-center justify-center">
         <div className="container-balanced">
-          <motion.div
+      <motion.div
             className="max-w-5xl mx-auto text-center"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
           >
             {/* Centered Main Heading */}
             <motion.h1
@@ -239,24 +239,24 @@ const Hero = () => {
             </motion.p>
 
             {/* Centered CTA Buttons */}
-            <motion.div
+        <motion.div 
               className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-12 mx-auto"
-              variants={itemVariants}
-            >
-              <motion.button
+          variants={itemVariants}
+        >
+          <motion.button
                 className="btn-primary text-sm px-5 py-2.5"
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                onClick={scrollToProducts}
+            onClick={scrollToProducts}
               >
                 <span className="flex items-center gap-2">
                   Explore Solutions
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
-              </motion.button>
-
-              <motion.button
+          </motion.button>
+          
+          <motion.button
                 className="btn-secondary text-sm px-5 py-2.5"
                 variants={buttonVariants}
                 whileHover="hover"
@@ -266,8 +266,8 @@ const Hero = () => {
                   <Play className="w-3.5 h-3.5" />
                   Watch Demo
                 </span>
-              </motion.button>
-            </motion.div>
+          </motion.button>
+        </motion.div>
 
             {/* Centered Stats Section */}
             <motion.div
@@ -320,7 +320,7 @@ const Hero = () => {
 
       {/* Progress Bar */}
       {isClient && (
-        <motion.div
+          <motion.div
           ref={progressBarRef}
           className="fixed top-0 left-0 w-full h-0.5 bg-gradient-to-r from-orange-500 to-red-500 origin-left z-50"
           style={{ scaleX: scrollProgress / 100 }}

@@ -124,7 +124,7 @@ const Industries = () => {
   return (
     <section id="industries" className="section-standard bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div className="container-balanced">
-        <motion.div
+        <motion.div 
           className="text-center mb-12"
           variants={containerVariants}
           initial="hidden"
@@ -142,7 +142,7 @@ const Industries = () => {
         </motion.div>
 
         {/* Industries Grid */}
-        <motion.div
+        <motion.div 
           className="grid-balanced grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
           variants={containerVariants}
           initial="hidden"
@@ -150,11 +150,11 @@ const Industries = () => {
           viewport={{ once: true, amount: 0.3 }}
         >
           {industries.map((industry, index) => (
-            <motion.div
-              key={industry.id}
+              <motion.div
+                key={industry.id}
               className="card-elevated group relative overflow-hidden"
               variants={cardVariants}
-              custom={index}
+                custom={index}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
             >
@@ -162,21 +162,21 @@ const Industries = () => {
               <div className={`absolute inset-0 bg-gradient-to-br ${industry.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
               
               {/* Content */}
-              <div className="relative z-10">
+                  <div className="relative z-10">
                 {/* Icon */}
                 <div className={`icon-container bg-gradient-to-br ${industry.color} mx-auto mb-3`}>
                   <industry.icon className="w-5 h-5 text-white" />
-                </div>
+                    </div>
 
                 {/* Title */}
                 <h3 className="heading-sm text-gray-900 mb-2 text-center group-hover:text-gray-700 transition-colors duration-200">
-                  {industry.name}
-                </h3>
+                        {industry.name}
+                      </h3>
 
                 {/* Description */}
                 <p className="text-body-sm text-gray-600 mb-3 text-center leading-relaxed">
-                  {industry.description}
-                </p>
+                        {industry.description}
+                      </p>
 
                 {/* Features */}
                 <div className="space-y-2 mb-4">
@@ -186,13 +186,13 @@ const Industries = () => {
                       <span>{feature}</span>
                     </div>
                   ))}
-                </div>
+                      </div>
 
                 {/* Stats */}
                 <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                   <div className="text-sm text-gray-500">
                     <span className="font-medium">{industry.projects}</span> projects
-                  </div>
+                    </div>
                   <div className="text-sm text-gray-500">
                     <span className="font-medium">{industry.experience}</span> experience
                   </div>
@@ -201,14 +201,14 @@ const Industries = () => {
                 {/* Hover Action */}
                 <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors duration-200" />
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
           ))}
         </motion.div>
 
         {/* Call to Action */}
-        <motion.div
+        <motion.div 
           className="text-center mt-16"
           variants={itemVariants}
           initial="hidden"
