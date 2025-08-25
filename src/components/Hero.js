@@ -1,22 +1,15 @@
 'use client';
 
-import { ChevronDown, Sparkles, Zap, Settings, ArrowRight, Play, Star } from 'lucide-react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { useEffect, useState, useMemo } from 'react';
+import { Zap, Settings, ArrowRight, Play, Star, Shield } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useEffect, useState, useMemo, useRef } from 'react';
 
 const Hero = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isClient, setIsClient] = useState(false);
+  const progressBarRef = useRef(null);
 
   // Enhanced motion values for smoother interactions
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springConfig = { damping: 25, stiffness: 700 };
-  const mouseXSpring = useSpring(mouseX, springConfig);
-  const mouseYSpring = useSpring(mouseY, springConfig);
-
   // Pre-calculated positions for tech grid particles to avoid hydration issues
   const techGridPositions = useMemo(() => {
     const positions = [];
@@ -64,33 +57,30 @@ const Hero = () => {
   useEffect(() => {
     setIsClient(true);
     
-    const handleMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      setMousePosition({ x: clientX, y: clientY });
-      mouseX.set(clientX);
-      mouseY.set(clientY);
-    };
-
     const handleScroll = () => {
-      const scrolled = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrolled / maxScroll) * 100;
-      setScrollProgress(progress);
+      if (typeof window !== 'undefined') {
+        const scrolled = window.scrollY;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrolled / maxScroll) * 100;
+        setScrollProgress(progress);
+      }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [mouseX, mouseY]);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll);
+      
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, []);
 
   const scrollToProducts = () => {
-    const element = document.querySelector('#products');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (typeof document !== 'undefined') {
+      const element = document.querySelector('#products');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -100,14 +90,14 @@ const Hero = () => {
       opacity: 1,
       transition: {
         duration: 1.2,
-        staggerChildren: 0.15,
+        staggerChildren: 0.2,
         ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    hidden: { opacity: 0, y: 60, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
@@ -122,381 +112,221 @@ const Hero = () => {
     }
   };
 
-  const wordVariants = {
-    hidden: { opacity: 0, y: 30, rotateX: -90 },
-    visible: (custom) => ({
+  const buttonVariants = {
+    hidden: { opacity: 0, scale: 0.9, y: 20 },
+    visible: {
       opacity: 1,
+      scale: 1,
       y: 0,
-      rotateX: 0,
-      transition: { 
-        duration: 0.8, 
-        delay: custom * 0.1,
+      transition: {
+        duration: 0.8,
+        delay: 1.2,
         ease: [0.25, 0.46, 0.45, 0.94],
         type: "spring",
-        stiffness: 150,
+        stiffness: 200,
         damping: 25
       }
-    })
-  };
-
-  const floatingVariants = {
-    animate: {
-      y: [0, -20, 0],
-      rotate: [0, 5, -5, 0],
+    },
+    hover: {
+      scale: 1.05,
+      y: -5,
       transition: {
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut"
+        duration: 0.3,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    },
+    tap: {
+      scale: 0.98,
+      y: 0,
+      transition: {
+        duration: 0.1,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
-  // Don't render particles until client-side to avoid hydration issues
-  if (!isClient) {
-    return (
-      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-mesh">
-        {/* Static background elements */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-dark/95 via-navy-blue/85 to-steel-gray/60" />
-        
-        {/* Static floating shapes */}
-        <div className="absolute top-[8%] right-[12%] w-44 h-44 bg-gradient-to-br from-orange/25 to-orange-600/15 rounded-full blur-2xl" />
-        <div className="absolute bottom-[12%] left-[10%] w-36 h-36 bg-gradient-to-br from-blue-400/25 to-purple-600/15 rounded-full blur-2xl" />
-        <div className="absolute top-[30%] left-[6%] w-24 h-24 bg-orange/20 transform rotate-45 blur-md" />
-        <div className="absolute bottom-[25%] right-[8%] w-28 h-28 border-2 border-orange/40 rounded-full" />
-
-        {/* Main content placeholder */}
-        <div className="container mx-auto text-center text-white relative z-10 px-6 lg:px-8 max-w-7xl">
-          <div className="mb-10">
-            <div className="inline-flex items-center gap-4 px-10 py-5 rounded-full bg-glass border border-white/25 backdrop-blur-glass shadow-glass">
-              <Sparkles className="w-6 h-6 text-orange drop-shadow-lg" />
-              <span className="text-white/95 font-inter font-semibold text-base sm:text-lg tracking-wider">
-                PIONEERING INDUSTRIAL EXCELLENCE SINCE 1995
-              </span>
-              <div className="flex gap-1">
-                {[...Array(3)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 text-orange fill-orange" />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-16">
-            <h1 className="heading-xl font-poppins leading-none mb-8">
-              <span className="inline-block mr-10 bg-gradient-to-r from-white via-white to-gray-200 bg-clip-text text-transparent text-shadow-xl">
-                Krupa
-              </span>
-              <span className="inline-block mr-10 bg-gradient-to-r from-white via-white to-gray-200 bg-clip-text text-transparent text-shadow-xl">
-                Engineering
-              </span>
-              <span className="block text-[clamp(2.5rem,8vw,6rem)] font-bold mt-6 bg-gradient-orange bg-clip-text text-transparent relative">
-                Enterprise
-              </span>
-            </h1>
-          </div>
-
-          <div className="mb-20">
-            <p className="text-body-lg text-white/90 max-w-5xl mx-auto leading-relaxed font-inter">
-              Crafting precision-engineered solutions that power industries worldwide. 
-              <span className="block mt-3 text-xl">Where innovation meets reliability in every component we create.</span>
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-24">
-            <button className="group relative px-14 py-7 rounded-2xl font-poppins font-bold text-xl overflow-hidden bg-gradient-orange text-white shadow-button min-w-[300px]">
-              <div className="relative flex items-center justify-center gap-4">
-                <Zap className="w-7 h-7" />
-                <span>Explore Products</span>
-                <ArrowRight className="w-6 h-6" />
-              </div>
-            </button>
-            
-            <button className="group px-14 py-7 rounded-2xl font-poppins font-bold text-xl border-2 border-white/40 text-white bg-glass min-w-[300px]">
-              <div className="flex items-center justify-center gap-4">
-                <Settings className="w-7 h-7" />
-                <span>Get Custom Quote</span>
-              </div>
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const scrollIndicatorVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        delay: 2,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-mesh">
-      {/* Enhanced Background Elements with Better Performance */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-      <div className="absolute inset-0 bg-gradient-to-br from-navy-dark/95 via-navy-blue/85 to-steel-gray/60" />
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
+      {/* Refined Background Elements */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white/3 via-transparent to-white/3 opacity-60"></div>
       
-      {/* Enhanced Floating Geometric Shapes with Better Positioning */}
-      <motion.div 
-        className="absolute top-[8%] right-[12%] w-44 h-44 bg-gradient-to-br from-orange/25 to-orange-600/15 rounded-full blur-2xl"
-        variants={floatingVariants}
-        animate="animate"
-        style={{ animationDelay: '0s' }}
-      />
-      <motion.div 
-        className="absolute bottom-[12%] left-[10%] w-36 h-36 bg-gradient-to-br from-blue-400/25 to-purple-600/15 rounded-full blur-2xl"
-        variants={floatingVariants}
-        animate="animate"
-        style={{ animationDelay: '2s' }}
-      />
-      <motion.div 
-        className="absolute top-[30%] left-[6%] w-24 h-24 bg-orange/20 transform rotate-45 blur-md"
-        variants={floatingVariants}
-        animate="animate"
-        style={{ animationDelay: '4s' }}
-      />
-      <motion.div 
-        className="absolute bottom-[25%] right-[8%] w-28 h-28 border-2 border-orange/40 rounded-full"
-        animate={{ 
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.6, 0.3]
-        }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      {/* Enhanced Mouse-following gradient with Spring Physics */}
-      <motion.div 
-        className="absolute w-[600px] h-[600px] bg-gradient-radial from-orange/10 via-orange/5 to-transparent rounded-full blur-3xl pointer-events-none"
-        style={{
-          x: mouseXSpring,
-          y: mouseYSpring,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
-
-      {/* Enhanced Tech Grid Background with Pre-calculated Positions */}
-      <div className="absolute inset-0 opacity-[0.04]">
-        {techGridPositions.map((pos, i) => (
-          <motion.div 
-            key={i}
-            className="absolute w-1 h-1 bg-orange rounded-full"
+      {/* Refined Gradient Orbs - Much more subtle */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-orange-500/5 to-pink-500/5 rounded-full blur-2xl animate-pulse"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-gradient-to-r from-blue-500/5 to-cyan-500/5 rounded-full blur-2xl animate-pulse delay-1000"></div>
+      
+      {/* Refined Floating Elements - Much smaller and subtle */}
+        {techGridPositions.map((particle, index) => (
+          <motion.div
+            key={`tech-${index}`}
+            className="absolute w-1 h-1 bg-orange-400/20 rounded-full"
             style={{
-              top: `${pos.top}%`,
-              left: `${pos.left}%`,
+              top: `${particle.top}%`,
+              left: `${particle.left}%`,
             }}
             animate={{
-              y: [0, -100],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
+              opacity: [0.2, 0.8, 0.2],
+              scale: [0.8, 1.2, 0.8],
             }}
             transition={{
-              duration: pos.duration,
+              duration: particle.duration,
+              delay: particle.delay,
               repeat: Infinity,
-              delay: pos.delay,
               ease: "easeInOut"
             }}
           />
         ))}
+
+        {ambientParticlePositions.map((particle, index) => (
+          <motion.div
+            key={`ambient-${index}`}
+            className="absolute w-0.5 h-0.5 bg-blue-400/15 rounded-full"
+            style={{
+              x: particle.x,
+              y: particle.y,
+            }}
+            animate={{
+              y: [particle.y, particle.y - particle.yOffset],
+              opacity: [0.1, 0.6, 0.1],
+            }}
+            transition={{
+              duration: particle.duration,
+              delay: particle.delay,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        ))}
+
+      {/* Centered Main Content */}
+      <div className="relative z-10 w-full flex items-center justify-center">
+        <div className="container-balanced">
+          <motion.div
+            className="max-w-5xl mx-auto text-center"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {/* Centered Main Heading */}
+            <motion.h1
+              className="heading-xl text-white mb-6 text-center max-w-4xl mx-auto leading-tight"
+              variants={itemVariants}
+            >
+              Transforming Industries Through
+              <span className="text-gradient-primary block mt-2">Innovative Engineering</span>
+            </motion.h1>
+
+            {/* Centered Subtitle */}
+            <motion.p
+              className="text-body-md text-white/70 mb-8 max-w-2xl mx-auto leading-relaxed text-center"
+              variants={itemVariants}
+            >
+              We deliver cutting-edge solutions that revolutionize how businesses operate. 
+              From advanced automation to sustainable technologies, we&apos;re your partner in 
+              building the future.
+            </motion.p>
+
+            {/* Centered CTA Buttons */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-12 mx-auto"
+              variants={itemVariants}
+            >
+              <motion.button
+                className="btn-primary text-sm px-5 py-2.5"
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+                onClick={scrollToProducts}
+              >
+                <span className="flex items-center gap-2">
+                  Explore Solutions
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
+                </span>
+              </motion.button>
+
+              <motion.button
+                className="btn-secondary text-sm px-5 py-2.5"
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <span className="flex items-center gap-2">
+                  <Play className="w-3.5 h-3.5" />
+                  Watch Demo
+                </span>
+              </motion.button>
+            </motion.div>
+
+            {/* Centered Stats Section */}
+            <motion.div
+              className="grid-balanced grid-cols-2 md:grid-cols-4 max-w-2xl mx-auto pt-4 border-t border-white/8"
+              variants={itemVariants}
+            >
+              {[
+                { number: '500+', label: 'Projects Delivered', icon: Star },
+                { number: '50+', label: 'Industries Served', icon: Settings },
+                { number: '99%', label: 'Client Satisfaction', icon: Zap },
+                { number: '24/7', label: 'Support Available', icon: Shield }
+              ].map((stat) => (
+                <motion.div
+                  key={stat.label}
+                  className="text-center group"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="icon-container-secondary mx-auto mb-2">
+                    <stat.icon className="w-5 h-5 text-orange-400" />
+                  </div>
+                  <div className="text-xl font-bold text-white mb-1">{stat.number}</div>
+                  <div className="text-white/60 text-xs">{stat.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Enhanced Scroll Progress Indicator */}
-      <motion.div 
-        className="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-orange via-orange-500 to-orange-600 z-50 origin-left"
-        style={{ scaleX: scrollProgress / 100 }}
-        transition={{ type: "spring", stiffness: 100, damping: 30 }}
-      />
-
-      {/* Main Content with Enhanced Spacing and Typography */}
+      {/* Centered Scroll Indicator */}
       <motion.div
-        variants={containerVariants}
+        className="absolute bottom-6 left-1/2 transform -translate-x-1/2"
+        variants={scrollIndicatorVariants}
         initial="hidden"
         animate="visible"
-        className="container mx-auto text-center text-white relative z-10 px-6 lg:px-8 max-w-7xl"
       >
-        {/* Enhanced Subtitle Badge with Better Animation */}
-        <motion.div variants={itemVariants} className="mb-10">
-          <motion.div 
-            className="inline-flex items-center gap-4 px-10 py-5 rounded-full bg-glass border border-white/25 backdrop-blur-glass shadow-glass"
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: "0 20px 40px rgba(255, 106, 0, 0.2)"
-            }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            >
-              <Sparkles className="w-6 h-6 text-orange drop-shadow-lg" />
-            </motion.div>
-            <span className="text-white/95 font-inter font-semibold text-base sm:text-lg tracking-wider">
-              PIONEERING INDUSTRIAL EXCELLENCE SINCE 1995
-            </span>
-            <div className="flex gap-1">
-              {[...Array(3)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 text-orange fill-orange" />
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Enhanced Main Headline with Better Typography */}
-        <div className="mb-16">
-          <motion.h1 className="heading-xl font-poppins leading-none mb-8">
-            {"Krupa Engineering".split(" ").map((word, index) => (
-              <motion.span
-                key={index}
-                custom={index}
-                variants={wordVariants}
-                initial="hidden"
-                animate="visible"
-                className="inline-block mr-10 bg-gradient-to-r from-white via-white to-gray-200 bg-clip-text text-transparent text-shadow-xl"
-              >
-                {word}
-              </motion.span>
-            ))}
-            <motion.span
-              custom={2}
-              variants={wordVariants}
-              initial="hidden"
-              animate="visible"
-              className="block text-[clamp(2.5rem,8vw,6rem)] font-bold mt-6 bg-gradient-orange bg-clip-text text-transparent animate-text-shimmer relative"
-              style={{ backgroundSize: '200% 100%' }}
-            >
-              Enterprise
-              <motion.div 
-                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-40 h-1 bg-gradient-orange rounded-full"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 1.5, duration: 0.8, ease: "easeOut" }}
-              />
-            </motion.span>
-          </motion.h1>
-        </div>
-
-        {/* Enhanced Description with Better Typography */}
-        <motion.div 
-          variants={itemVariants}
-          className="mb-20"
+        <motion.div
+          className="w-5 h-8 border border-white/20 rounded-full flex justify-center"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <p className="text-body-lg text-white/90 max-w-5xl mx-auto leading-relaxed font-inter">
-            Crafting precision-engineered solutions that power industries worldwide. 
-            <span className="block mt-3 text-xl">Where innovation meets reliability in every component we create.</span>
-          </p>
-        </motion.div>
-
-        {/* Enhanced CTA Buttons with Better Interactions */}
-        <motion.div 
-          variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-24"
-        >
-          <motion.button
-            onClick={scrollToProducts}
-            onHoverStart={() => setIsHovering(true)}
-            onHoverEnd={() => setIsHovering(false)}
-            className="group relative px-14 py-7 rounded-2xl font-poppins font-bold text-xl overflow-hidden bg-gradient-orange text-white shadow-button min-w-[300px] focus:outline-none focus:ring-4 focus:ring-orange/30"
-            whileHover={{ 
-              scale: 1.05, 
-              y: -5,
-              boxShadow: "0 25px 50px rgba(255, 106, 0, 0.4)"
-            }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          >
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 opacity-0 group-hover:opacity-100 transition-all duration-300"
-              initial={false}
-            />
-            <div className="relative flex items-center justify-center gap-4">
-              <motion.div
-                animate={{ 
-                  rotate: isHovering ? [0, 15, -15, 0] : 0,
-                  scale: isHovering ? 1.1 : 1
-                }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <Zap className="w-7 h-7" />
-              </motion.div>
-              <span>Explore Products</span>
-              <motion.div
-                animate={{ x: isHovering ? 8 : 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                <ArrowRight className="w-6 h-6" />
-              </motion.div>
-            </div>
-          </motion.button>
-          
-          <motion.button
-            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-            onHoverStart={() => setIsHovering(true)}
-            onHoverEnd={() => setIsHovering(false)}
-            className="group px-14 py-7 rounded-2xl font-poppins font-bold text-xl border-2 border-white/40 text-white bg-glass hover:bg-white/15 hover:border-orange/60 transition-all duration-300 min-w-[300px] focus:outline-none focus:ring-4 focus:ring-white/30"
-            whileHover={{ 
-              scale: 1.05, 
-              y: -5,
-              boxShadow: "0 25px 50px rgba(255, 255, 255, 0.1)"
-            }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          >
-            <div className="flex items-center justify-center gap-4">
-              <motion.div 
-                className="group-hover:rotate-90 transition-transform duration-500"
-                animate={{ scale: isHovering ? 1.1 : 1 }}
-              >
-                <Settings className="w-7 h-7" />
-              </motion.div>
-              <span>Get Custom Quote</span>
-            </div>
-          </motion.button>
-        </motion.div>
-
-        {/* Enhanced Scroll Indicator with Better Animation */}
-        <motion.div 
-          variants={itemVariants}
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.button 
-            className="flex flex-col items-center gap-4 text-white/90 cursor-pointer group focus:outline-none focus:ring-4 focus:ring-white/30 rounded-full p-2"
-            onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
-            whileHover={{ scale: 1.1 }}
-            whileFocus={{ scale: 1.1 }}
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <span className="text-sm font-inter uppercase tracking-[0.2em] group-hover:text-orange transition-colors duration-300 font-semibold">
-              Discover More
-            </span>
-            <div className="w-[3px] h-16 bg-gradient-to-b from-white/70 via-orange/50 to-transparent rounded-full" />
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <ChevronDown size={32} className="group-hover:text-orange transition-colors duration-300" />
-            </motion.div>
-          </motion.button>
+          <motion.div
+            className="w-0.5 h-2 bg-white/40 rounded-full mt-2"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          />
         </motion.div>
       </motion.div>
 
-      {/* Enhanced Ambient Particles with Pre-calculated Positions */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {ambientParticlePositions.map((pos, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white/30 rounded-full"
-            initial={{
-              x: pos.x,
-              y: pos.y,
-            }}
-            animate={{
-              y: [null, pos.y - pos.yOffset],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: pos.duration,
-              repeat: Infinity,
-              delay: pos.delay,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
+      {/* Progress Bar */}
+      {isClient && (
+        <motion.div
+          ref={progressBarRef}
+          className="fixed top-0 left-0 w-full h-0.5 bg-gradient-to-r from-orange-500 to-red-500 origin-left z-50"
+          style={{ scaleX: scrollProgress / 100 }}
+          transition={{ duration: 0.1 }}
+        />
+      )}
     </section>
   );
 };

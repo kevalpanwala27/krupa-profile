@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sparkles, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,40 +11,48 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 80);
-      
-      // Update active section based on scroll position
-      const sections = ['home', 'about', 'products', 'industries', 'why-us', 'clients', 'gallery', 'contact'];
-      const current = sections.find(section => {
-        const element = document.querySelector(`#${section}`);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+      if (typeof window !== 'undefined') {
+        setScrolled(window.scrollY > 80);
+        
+        // Update active section based on scroll position
+        if (typeof document !== 'undefined') {
+          const sections = ['home', 'about', 'products', 'industries', 'why-us', 'clients', 'gallery', 'contact'];
+          const current = sections.find(section => {
+            const element = document.querySelector(`#${section}`);
+            if (element) {
+              const rect = element.getBoundingClientRect();
+              return rect.top <= 100 && rect.bottom >= 100;
+            }
+            return false;
+          });
+          if (current) setActiveSection(current);
         }
-        return false;
-      });
-      if (current) setActiveSection(current);
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '#home', icon: '🏠' },
-    { name: 'About', href: '#about', icon: 'ℹ️' },
-    { name: 'Products', href: '#products', icon: '📦' },
-    { name: 'Industries', href: '#industries', icon: '🏭' },
-    { name: 'Why Us', href: '#why-us', icon: '⭐' },
-    { name: 'Clients', href: '#clients', icon: '👥' },
-    { name: 'Gallery', href: '#gallery', icon: '🖼️' },
-    { name: 'Contact', href: '#contact', icon: '📞' }
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Products', href: '#products' },
+    { name: 'Industries', href: '#industries' },
+    { name: 'Why Us', href: '#why-us' },
+    { name: 'Clients', href: '#clients' },
+    { name: 'Gallery', href: '#gallery' },
+    { name: 'Contact', href: '#contact' }
   ];
 
   const scrollToSection = (href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (typeof document !== 'undefined') {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     setIsOpen(false);
   };
@@ -55,11 +63,8 @@ const Navbar = () => {
       y: 0, 
       opacity: 1,
       transition: { 
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94],
-        type: "spring",
-        stiffness: 100,
-        damping: 20
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
@@ -68,9 +73,9 @@ const Navbar = () => {
     hidden: { 
       opacity: 0, 
       height: 0,
-      scale: 0.95,
+      scale: 0.98,
       transition: { 
-        duration: 0.3,
+        duration: 0.2,
         ease: [0.25, 0.46, 0.45, 0.94]
       }
     },
@@ -79,237 +84,211 @@ const Navbar = () => {
       height: "auto",
       scale: 1,
       transition: { 
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94],
-        type: "spring",
-        stiffness: 100,
-        damping: 20
+        duration: 0.3,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, x: -30, scale: 0.9 },
+    hidden: { opacity: 0, x: -20, scale: 0.95 },
+    visible: (i) => ({
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: {
+        delay: i * 0.05,
+        duration: 0.3,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    })
+  };
+
+  const mobileItemVariants = {
+    hidden: { opacity: 0, x: -15, scale: 0.95 },
     visible: (i) => ({
       opacity: 1,
       x: 0,
       scale: 1,
       transition: {
         delay: i * 0.08,
-        duration: 0.4,
-        ease: [0.25, 0.46, 0.45, 0.94],
-        type: "spring",
-        stiffness: 200,
-        damping: 25
+        duration: 0.3,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     })
   };
 
-  const logoVariants = {
-    hover: { 
-      scale: 1.05,
-      rotate: [0, -5, 5, 0],
-      transition: { duration: 0.6, ease: "easeInOut" }
-    },
-    tap: { scale: 0.95 }
-  };
-
   return (
     <motion.nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-gray-900/98 backdrop-blur-xl border-b border-gray-700/40 shadow-xl' 
+          : 'bg-gray-900/90 backdrop-blur-lg border-b border-gray-700/20'
+      }`}
       variants={navVariants}
       initial="hidden"
       animate="visible"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-        scrolled 
-          ? 'bg-navy-blue/95 backdrop-blur-glass border-b border-white/15 shadow-glass' 
-          : 'bg-transparent'
-      }`}
     >
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24">
-          {/* Enhanced Logo with Better Animation */}
+      <div className="container-balanced">
+        <div className="flex items-center justify-between h-16">
+          {/* Professional Logo - Left Side */}
           <motion.div
-            variants={logoVariants}
-            whileHover="hover"
-            whileTap="tap"
-            className="relative group"
+            className="flex items-center gap-3 group cursor-pointer flex-shrink-0"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => scrollToSection('#home')}
           >
-            <motion.div 
-              className="flex items-center gap-4 text-white cursor-pointer"
-              onClick={() => scrollToSection('#home')}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="relative">
-                <motion.div
-                  animate={{ 
-                    rotate: [0, 360],
-                    scale: [1, 1.1, 1]
-                  }}
-                  transition={{ 
-                    rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                    scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-                  }}
-                >
-                  <Sparkles className="w-10 h-10 text-orange drop-shadow-lg" />
-                </motion.div>
-                <motion.div 
-                  className="absolute inset-0 animate-pulse"
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 0.8, 0.5]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <Sparkles className="w-10 h-10 text-orange/50" />
-                </motion.div>
+            <div className="relative">
+              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
+                <span className="text-white font-bold text-lg">K</span>
               </div>
-              <div className="group-hover:scale-105 transition-transform duration-300">
-                <div className="text-2xl font-poppins font-bold bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">
-                  Krupa Engineering
-                </div>
-                <div className="text-sm text-orange/90 font-inter font-medium tracking-wide">Enterprise</div>
-              </div>
-            </motion.div>
+              <div className="absolute -inset-0.5 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg blur opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+            </div>
+            <div className="hidden sm:block">
+              <h1 className="text-base md:text-lg font-bold text-white leading-tight">
+                Krupa Engineering
+              </h1>
+              <p className="text-xs text-gray-300 font-medium leading-tight">Innovation & Excellence</p>
+            </div>
           </motion.div>
 
-          {/* Enhanced Desktop Navigation with Better Visual Feedback */}
-          <div className="hidden lg:flex items-center">
-            <div className="flex items-center space-x-2 bg-white/8 backdrop-blur-glass rounded-2xl border border-white/15 px-3 py-3 shadow-glass">
-              {navItems.map((item) => (
-                <motion.button
+          {/* Professional Desktop Navigation - Centered */}
+          <div className="hidden lg:flex items-center justify-center flex-1 px-8">
+            <div className="flex items-center gap-1">
+              {navItems.map((item, index) => (
+                <motion.div
                   key={item.name}
-                  whileHover={{ 
-                    scale: 1.08,
-                    backgroundColor: "rgba(255, 106, 0, 0.15)",
-                    borderColor: "rgba(255, 106, 0, 0.3)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => scrollToSection(item.href)}
-                  className={`relative px-6 py-3 text-white/90 hover:text-white font-inter font-semibold rounded-xl transition-all duration-300 group border border-transparent ${
-                    activeSection === item.name.toLowerCase() 
-                      ? 'bg-orange/20 text-orange border-orange/30' 
-                      : 'hover:bg-white/10'
-                  }`}
-                  aria-label={`Navigate to ${item.name} section`}
+                  className="relative group"
+                  variants={itemVariants}
+                  custom={index}
+                  initial="hidden"
+                  animate="visible"
                 >
-                  <span className="relative z-10 flex items-center gap-2">
-                    <span className="text-sm opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                      {item.icon}
-                    </span>
+                  <button
+                    onClick={() => scrollToSection(item.href)}
+                    className={`relative px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 group-hover:bg-white/5 ${
+                      activeSection === item.name.toLowerCase().replace(' ', '-')
+                        ? 'text-orange-400 bg-orange-500/15 border border-orange-500/25'
+                        : 'text-gray-300 hover:text-white'
+                    }`}
+                  >
                     {item.name}
-                  </span>
-                  <motion.div 
-                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange/20 to-orange/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    initial={false}
-                  />
-                  {activeSection === item.name.toLowerCase() && (
-                    <motion.div
-                      className="absolute -bottom-1 left-1/2 w-6 h-1 bg-orange rounded-full"
-                      layoutId="activeIndicator"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    />
-                  )}
-                </motion.button>
+                    
+                    {/* Subtle Hover Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                    
+                    {/* Active Indicator */}
+                    {activeSection === item.name.toLowerCase().replace(' ', '-') && (
+                      <motion.div
+                        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-orange-400 rounded-full"
+                        layoutId="activeIndicator"
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      />
+                    )}
+                  </button>
+                </motion.div>
               ))}
             </div>
           </div>
 
-          {/* Enhanced Mobile Menu Button */}
+          {/* Professional CTA Button - Right Side */}
+          <motion.div
+            className="hidden lg:block flex-shrink-0"
+            variants={itemVariants}
+            custom={navItems.length}
+            initial="hidden"
+            animate="visible"
+          >
+            <button className="btn-primary text-sm px-5 py-2.5">
+              <span className="flex items-center gap-2">
+                Get Started
+                <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-200" />
+              </span>
+            </button>
+          </motion.div>
+
+          {/* Professional Mobile Menu Button - Right Side */}
           <motion.button
+            className="lg:hidden relative z-50 p-2 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 text-white hover:bg-white/10 transition-all duration-200 flex-shrink-0"
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden relative p-4 rounded-2xl bg-white/8 backdrop-blur-glass border border-white/15 text-white shadow-glass focus:outline-none focus:ring-4 focus:ring-white/30"
-            whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 106, 0, 0.1)" }}
-            whileTap={{ scale: 0.95 }}
-            aria-label={isOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={isOpen}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <AnimatePresence mode="wait">
-              <motion.div
-                key={isOpen ? 'close' : 'menu'}
-                initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
-                transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
-              </motion.div>
+              {isOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <X className="w-5 h-5" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <Menu className="w-5 h-5" />
+                </motion.div>
+              )}
             </AnimatePresence>
           </motion.button>
         </div>
 
-        {/* Enhanced Mobile Navigation with Better Animation */}
+        {/* Professional Mobile Menu */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
+              className="lg:hidden bg-gray-900/98 backdrop-blur-xl border-t border-gray-700/30 rounded-b-xl shadow-xl"
               variants={mobileMenuVariants}
               initial="hidden"
               animate="visible"
               exit="hidden"
-              className="lg:hidden overflow-hidden"
             >
-              <div className="bg-navy-blue/98 backdrop-blur-glass border-t border-white/15 rounded-b-3xl mx-4 mb-6 shadow-2xl">
-                <div className="px-8 py-10 space-y-3">
-                  {navItems.map((item, index) => (
-                    <motion.button
-                      key={item.name}
-                      custom={index}
-                      variants={itemVariants}
-                      initial="hidden"
-                      animate="visible"
+              <div className="py-4 space-y-1">
+                {navItems.map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    variants={mobileItemVariants}
+                    custom={index}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <button
                       onClick={() => scrollToSection(item.href)}
-                      className={`group flex items-center w-full text-left py-5 px-6 font-inter font-semibold rounded-2xl transition-all duration-300 border border-transparent ${
-                        activeSection === item.name.toLowerCase()
-                          ? 'bg-orange/20 text-orange border-orange/30'
-                          : 'text-white/90 hover:text-white hover:bg-white/8'
+                      className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 text-left ${
+                        activeSection === item.name.toLowerCase().replace(' ', '-')
+                          ? 'text-orange-400 bg-orange-500/15 border border-orange-500/25'
+                          : 'text-gray-300 hover:bg-white/5 hover:text-white'
                       }`}
-                      whileHover={{ x: 12, scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      aria-label={`Navigate to ${item.name} section`}
                     >
-                      <div className={`w-3 h-3 rounded-full mr-5 transition-colors duration-300 ${
-                        activeSection === item.name.toLowerCase()
-                          ? 'bg-orange'
-                          : 'bg-orange/60 group-hover:bg-orange'
-                      }`} />
-                      <span className="text-lg flex items-center gap-3">
-                        <span className="text-xl">{item.icon}</span>
-                        {item.name}
-                      </span>
-                      {activeSection === item.name.toLowerCase() && (
-                        <motion.div
-                          className="ml-auto"
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
-                        >
-                          <ChevronDown className="w-5 h-5 text-orange" />
-                        </motion.div>
+                      {item.name}
+                      {activeSection === item.name.toLowerCase().replace(' ', '-') && (
+                        <div className="ml-auto w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
                       )}
-                    </motion.button>
-                  ))}
-                </div>
+                    </button>
+                  </motion.div>
+                ))}
                 
-                {/* Enhanced Mobile Menu Footer */}
-                <motion.div 
-                  className="px-8 py-6 border-t border-white/10"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
+                {/* Mobile CTA Button */}
+                <motion.div
+                  variants={mobileItemVariants}
+                  custom={navItems.length}
+                  initial="hidden"
+                  animate="visible"
+                  className="pt-3"
                 >
-                  <div className="text-center">
-                    <div className="text-white/70 text-sm font-inter mb-2">Ready to get started?</div>
-                    <motion.button
-                      onClick={() => {
-                        scrollToSection('#contact');
-                        setIsOpen(false);
-                      }}
-                      className="px-6 py-3 bg-gradient-orange text-white font-semibold rounded-xl shadow-button hover:shadow-lg transition-all duration-300"
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Contact Us
-                    </motion.button>
-                  </div>
+                  <button className="w-full btn-primary text-sm px-4 py-2.5">
+                    <span className="flex items-center justify-center gap-2">
+                      Get Started
+                      <ChevronDown className="w-4 h-4" />
+                    </span>
+                  </button>
                 </motion.div>
               </div>
             </motion.div>

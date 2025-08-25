@@ -2,9 +2,14 @@
 
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const [currentYear, setCurrentYear] = useState('');
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear().toString());
+  }, []);
 
   const footerSections = [
     {
@@ -43,128 +48,86 @@ const Footer = () => {
   ];
 
   const scrollToSection = (href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (typeof document !== 'undefined') {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.2,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
     }
   };
 
   return (
-    <footer className="bg-navy-blue text-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+    <footer className="bg-gray-900 text-white">
+      <div className="container-balanced py-12">
         {/* Main Footer Content */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 mb-10"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
           {/* Company Info */}
-          <div className="lg:col-span-2">
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-2xl font-bold mb-4"
-            >
+          <motion.div
+            className="lg:col-span-2"
+            variants={itemVariants}
+          >
+            <h3 className="heading-md text-white mb-3">
               Krupa Engineering Enterprise
-            </motion.h3>
+            </h3>
             
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-gray-300 mb-6 leading-relaxed"
-            >
+            <p className="text-body-md text-gray-300 mb-4 leading-relaxed">
               Leading manufacturer of industrial equipment and custom fabrication solutions. 
               Delivering quality, innovation, and reliability since 1995.
-            </motion.p>
+            </p>
 
             {/* Contact Info */}
-            <div className="space-y-3">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex items-center space-x-3"
-              >
-                <Phone className="w-5 h-5 text-orange-400" />
-                <span className="text-gray-300">+91 9825077239</span>
-              </motion.div>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-3">
+                <Phone className="w-4 h-4 text-orange-400" />
+                <span className="text-gray-300 text-sm">+91 9825077239</span>
+              </div>
               
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex items-center space-x-3"
-              >
-                <Mail className="w-5 h-5 text-orange-400" />
-                <span className="text-gray-300">krupa.eng.ent@gmail.com</span>
-              </motion.div>
+              <div className="flex items-center space-x-3">
+                <Mail className="w-4 h-4 text-orange-400" />
+                <span className="text-gray-300 text-sm">krupa.eng.ent@gmail.com</span>
+              </div>
               
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex items-start space-x-3"
-              >
-                <MapPin className="w-5 h-5 text-orange-400 mt-1" />
-                <span className="text-gray-300">
-                  K-1/209/2 GIDC IND ESTATE, Nr. G. Dalabhai Transpot, 
-                  GIDC Ankleshwar, Bharuch 393002
+              <div className="flex items-center space-x-3">
+                <MapPin className="w-4 h-4 text-orange-400" />
+                <span className="text-gray-300 text-sm">
+                  K-1/209/2 GIDC IND ESTATE, Ankleshwar, Bharuch 393002
                 </span>
-              </motion.div>
+              </div>
             </div>
-          </div>
 
-          {/* Footer Sections */}
-          {footerSections.map((section, sectionIndex) => (
-            <div key={section.title}>
-              <motion.h4
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 + sectionIndex * 0.1 }}
-                className="text-lg font-semibold mb-4 text-orange-400"
-              >
-                {section.title}
-              </motion.h4>
-              
-              <ul className="space-y-2">
-                {section.links.map((link, linkIndex) => (
-                  <motion.li
-                    key={link.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 + sectionIndex * 0.1 + linkIndex * 0.05 }}
-                  >
-                    <button
-                      onClick={() => scrollToSection(link.href)}
-                      className="text-gray-300 hover:text-orange-400 transition-colors duration-300 text-sm"
-                    >
-                      {link.name}
-                    </button>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom Footer */}
-        <div className="border-t border-gray-700 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            {/* Copyright */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-gray-300 text-sm"
-            >
-              © {currentYear} Krupa Engineering Enterprise. All rights reserved.
-            </motion.div>
-
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex space-x-4"
-            >
+            {/* Social Media Links */}
+            <div className="flex space-x-3 mt-4">
               {[
                 { icon: Facebook, href: "#", label: "Facebook" },
                 { icon: Twitter, href: "#", label: "Twitter" },
@@ -174,30 +137,67 @@ const Footer = () => {
                 <motion.a
                   key={social.label}
                   href={social.href}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 bg-gray-700 hover:bg-orange-500 rounded-full flex items-center justify-center transition-all duration-300"
                   aria-label={social.label}
+                  className="w-8 h-8 bg-gray-800 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-all duration-300 group"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="w-4 h-4 text-gray-300 group-hover:text-white transition-colors duration-300" />
                 </motion.a>
               ))}
-            </motion.div>
-          </div>
-
-          {/* Additional Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-6 text-center text-gray-400 text-sm"
-          >
-            <p>
-              ISO 9001:2015 Certified • ASME Code Compliant • 
-              Member of Indian Engineering Association
-            </p>
+            </div>
           </motion.div>
-        </div>
+
+          {/* Footer Sections */}
+          {footerSections.map((section) => (
+            <motion.div
+              key={section.title}
+              className="space-y-3"
+              variants={itemVariants}
+            >
+              <h4 className="heading-sm text-white mb-3">{section.title}</h4>
+              <ul className="space-y-1.5">
+                {section.links.map((link) => (
+                  <li key={link.name}>
+                    <button
+                      onClick={() => scrollToSection(link.href)}
+                      className="text-body-sm text-gray-300 hover:text-orange-400 transition-colors duration-200 text-left hover:translate-x-1 transform transition-transform duration-200"
+                    >
+                      {link.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Bottom Footer */}
+        <motion.div
+          className="pt-8 border-t border-gray-700"
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-body-sm text-gray-400 text-center md:text-left">
+              © {currentYear} Krupa Engineering Enterprise. All rights reserved.
+            </p>
+            
+            <div className="flex space-x-6 text-body-sm text-gray-400">
+              <button className="hover:text-orange-400 transition-colors duration-200">
+                Privacy Policy
+              </button>
+              <button className="hover:text-orange-400 transition-colors duration-200">
+                Terms of Service
+              </button>
+              <button className="hover:text-orange-400 transition-colors duration-200">
+                Cookie Policy
+              </button>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </footer>
   );

@@ -1,16 +1,66 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { clients } from '../data/products';
-import { Star, Award, Heart, Building2, TrendingUp } from 'lucide-react';
+import { Building2, Users, Star, Award, Globe, TrendingUp } from 'lucide-react';
 
 const Clients = () => {
-  const { ref: inViewRef, inView: isInView } = useInView({ 
-    once: true, 
-    margin: "-100px",
-    threshold: 0.1
-  });
+  const clients = [
+    {
+      name: "Reliance Industries",
+      logo: "/images/clients/reliance.png",
+      industry: "Oil & Gas",
+      testimonial: "Exceptional quality and on-time delivery. Krupa Engineering has been our trusted partner for over 10 years.",
+      rating: 5,
+      projects: 25
+    },
+    {
+      name: "Larsen & Toubro",
+      logo: "/images/clients/lnt.png",
+      industry: "Engineering",
+      testimonial: "Professional team with deep technical expertise. They consistently exceed our expectations.",
+      rating: 5,
+      projects: 18
+    },
+    {
+      name: "Bharat Petroleum",
+      logo: "/images/clients/bpcl.png",
+      industry: "Petroleum",
+      testimonial: "Reliable partner for critical equipment. Their attention to detail is outstanding.",
+      rating: 5,
+      projects: 32
+    },
+    {
+      name: "Cipla Limited",
+      logo: "/images/clients/cipla.png",
+      industry: "Pharmaceutical",
+      testimonial: "High-quality pharmaceutical equipment. Krupa Engineering understands our industry requirements perfectly.",
+      rating: 5,
+      projects: 15
+    },
+    {
+      name: "Tata Chemicals",
+      logo: "/images/clients/tata.png",
+      industry: "Chemical",
+      testimonial: "Excellent technical support and after-sales service. Highly recommended for chemical industry equipment.",
+      rating: 5,
+      projects: 28
+    },
+    {
+      name: "NTPC Limited",
+      logo: "/images/clients/ntpc.png",
+      industry: "Power Generation",
+      testimonial: "Dependable partner for power plant equipment. Their engineering solutions are world-class.",
+      rating: 5,
+      projects: 22
+    }
+  ];
+
+  const stats = [
+    { number: "500+", label: "Happy Clients", icon: Users },
+    { number: "1000+", label: "Projects Completed", icon: Building2 },
+    { number: "99%", label: "Client Satisfaction", icon: Star },
+    { number: "25+", label: "Years Experience", icon: Award }
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -18,286 +68,155 @@ const Clients = () => {
       opacity: 1,
       transition: {
         duration: 0.8,
-        staggerChildren: 0.12
+        staggerChildren: 0.2,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
     }
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: 30 },
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: (i) => ({
       opacity: 1,
-      scale: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        delay: i * 0.08,
-        ease: "easeOut",
-        type: "spring",
-        stiffness: 150
-      }
-    })
-  };
-
-  const statsVariants = {
-    hidden: { opacity: 0, scale: 0 },
-    visible: (i) => ({
-      opacity: 1,
       scale: 1,
       transition: {
-        duration: 0.8,
-        delay: i * 0.2,
-        type: "spring",
-        stiffness: 200
+        delay: i * 0.1,
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     })
   };
 
   return (
-    <section id="clients" className="section-padding bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
-      {/* Enhanced Background Elements */}
-      <div className="absolute top-[15%] left-[5%] w-[400px] h-[400px] bg-gradient-radial from-blue-400/6 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-[20%] right-[10%] w-[350px] h-[350px] bg-gradient-radial from-green-500/6 to-transparent rounded-full blur-3xl" />
-      <div className="absolute top-[60%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-radial from-orange/4 to-transparent rounded-full blur-3xl" />
-      <div className="absolute inset-0 bg-dots-pattern opacity-[0.012]" />
-
-      {/* Floating Elements */}
-      <div className="absolute top-[20%] right-[20%] w-16 h-16 bg-gradient-to-br from-blue-400/10 to-blue-500/5 rounded-full animate-float blur-sm" />
-      <div className="absolute bottom-[25%] left-[15%] w-20 h-20 bg-gradient-to-br from-green-500/10 to-green-600/5 rounded-full animate-float blur-sm" style={{ animationDelay: '1.5s' }} />
-
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        {/* Enhanced Header */}
+    <section id="clients" className="section-standard bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <div className="container-balanced">
         <motion.div
-          ref={inViewRef}
+          className="text-center mb-12"
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center mb-20"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
         >
-          <motion.div variants={itemVariants} className="mb-8">
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/10 via-green-500/10 to-blue-500/10 border border-blue-500/20 mb-8">
-              <motion.div
-                animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <Heart className="w-5 h-5 text-red-500 fill-red-500" />
-              </motion.div>
-              <span className="text-blue-600 font-inter font-bold text-sm tracking-[0.15em]">TRUSTED BY THE BEST</span>
-              <Building2 className="w-4 h-4 text-blue-600" />
-            </div>
-          </motion.div>
-
-          <motion.h2 
-            variants={itemVariants}
-            className="heading-xl font-poppins text-navy-blue mb-8 leading-none"
-          >
-            Our Trusted
-            <span className="block bg-gradient-to-r from-blue-600 via-green-600 to-blue-700 bg-clip-text text-transparent relative">
-              Partners
-              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-28 h-1 bg-gradient-to-r from-blue-600 to-green-600 rounded-full"></div>
-            </span>
-          </motion.h2>
-          
-          <motion.p 
-            variants={itemVariants}
-            className="text-body-lg text-gray-600 max-w-4xl mx-auto leading-relaxed font-inter"
-          >
-            We are proud to serve leading companies across various industries, 
-            building lasting partnerships through exceptional service and quality.
-          </motion.p>
+          <h2 className="heading-lg text-gray-900 mb-4">
+            Trusted by Industry <span className="text-gradient-primary">Leaders</span>
+          </h2>
+          <p className="text-body-md text-gray-600 max-w-2xl mx-auto">
+            We&apos;re proud to serve some of the biggest names in industry. Our commitment to quality, 
+            innovation, and customer satisfaction has earned us the trust of leading companies worldwide.
+          </p>
         </motion.div>
 
-        {/* Enhanced Clients Grid */}
+        {/* Stats Section */}
         <motion.div
+          className="grid-balanced grid-cols-2 md:grid-cols-4 mb-16"
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-20"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
         >
-          {clients.map((client, index) => (
+          {stats.map((stat) => (
             <motion.div
-              key={client.id}
-              custom={index}
-              variants={cardVariants}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              whileHover={{ scale: 1.08, y: -8, rotateY: 5 }}
-              className="group"
+              key={stat.label}
+              className="text-center group"
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
             >
-              <div className="card-enhanced p-8 text-center hover:shadow-2xl transition-all duration-500 group border border-gray-100 hover:border-orange/30 bg-gradient-to-br from-white to-gray-50">
-                {/* Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-orange/3 via-transparent to-blue-400/3 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-3xl" />
-                
-                <div className="relative z-10">
-                  {/* Client Logo/Avatar */}
-                  <div className="relative mb-6">
-                    <motion.div 
-                      className="w-20 h-20 mx-auto bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-all duration-400 relative overflow-hidden"
-                      whileHover={{ rotate: 5 }}
-                    >
-                      <motion.div
-                        className="text-4xl font-poppins font-black text-gray-500 group-hover:text-gray-600 transition-colors duration-300"
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                      >
-                        {client.name.charAt(0)}
-                      </motion.div>
-                      {/* Logo Glow */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-orange/20 to-blue-400/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    </motion.div>
-                    
-                    {/* Trust Badge */}
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-lg">
-                      <Star className="w-4 h-4 text-white fill-white" />
-                    </div>
-                  </div>
-                  
-                  {/* Client Info */}
-                  <div className="space-y-3">
-                    <h3 className="text-lg font-poppins font-bold text-navy-blue group-hover:text-orange transition-colors duration-300">
-                      {client.name}
-                    </h3>
-                    
-                    {/* Quality Indicators */}
-                    <div className="flex justify-center space-x-1">
-                      {[...Array(5)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                          transition={{ duration: 0.3, delay: index * 0.1 + i * 0.05 }}
-                        >
-                          <Star className="w-3 h-3 text-orange fill-orange" />
-                        </motion.div>
-                      ))}
-                    </div>
-                    
-                    {/* Partnership Duration */}
-                    <div className="text-xs text-gray-500 font-inter font-medium">
-                      Trusted Partner Since 2019
-                    </div>
-                  </div>
+              <div className="icon-container mx-auto mb-3">
+                <stat.icon className="w-5 h-5 text-white" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900 mb-1">{stat.number}</div>
+              <div className="text-gray-600 text-sm">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Clients Grid */}
+        <motion.div
+          className="grid-balanced grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          {clients.map((client) => (
+            <motion.div
+              key={client.name}
+              className="card-elevated group"
+              variants={cardVariants}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Client Header */}
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex-1">
+                  <h3 className="heading-sm text-gray-900 mb-2 group-hover:text-green-600 transition-colors duration-200">
+                    {client.name}
+                  </h3>
+                  <span className="inline-block px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-md">
+                    {client.industry}
+                  </span>
                 </div>
+                <div className="flex items-center gap-1">
+                  {[...Array(client.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+              </div>
+
+              {/* Testimonial */}
+              <p className="text-body-sm text-gray-600 mb-4 leading-relaxed">
+                &ldquo;{client.testimonial}&rdquo;
+              </p>
+
+              {/* Project Count */}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <Building2 className="w-4 h-4" />
+                  <span>{client.projects} projects</span>
+                </div>
+                <TrendingUp className="w-4 h-4 text-green-500" />
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Enhanced Trust Indicators */}
+        {/* Call to Action */}
         <motion.div
-          variants={containerVariants}
+          className="text-center mt-16"
+          variants={itemVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="mb-20"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
         >
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-6">
-              <TrendingUp className="w-4 h-4 text-green-600" />
-              <span className="text-green-600 font-inter font-semibold text-sm tracking-wide">PROVEN RESULTS</span>
+          <div className="card-elevated max-w-2xl mx-auto">
+            <div className="icon-container mx-auto mb-4">
+              <Globe className="w-6 h-6 text-white" />
             </div>
-            <h3 className="heading-lg font-poppins text-navy-blue">
-              Numbers That Matter
+            <h3 className="heading-md text-gray-900 mb-3">
+              Ready to Join Our Client Family?
             </h3>
-          </motion.div>
-
-          <motion.div 
-            variants={containerVariants}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8"
-          >
-            {[
-              { value: "500+", label: "Projects Completed", icon: "📊", color: "from-blue-500 to-blue-600", bgColor: "bg-blue-500/10" },
-              { value: "50+", label: "Happy Clients", icon: "😊", color: "from-green-500 to-green-600", bgColor: "bg-green-500/10" },
-              { value: "25+", label: "Years Experience", icon: "⭐", color: "from-orange-500 to-orange-600", bgColor: "bg-orange/10" },
-              { value: "99%", label: "Client Retention", icon: "💯", color: "from-purple-500 to-purple-600", bgColor: "bg-purple-500/10" }
-            ].map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                custom={index}
-                variants={statsVariants}
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                whileHover={{ scale: 1.08, y: -6 }}
-                className="text-center group"
-              >
-                <div className="card-enhanced p-8 hover:shadow-2xl transition-all duration-500">
-                  <div className="relative mb-6">
-                    <motion.div 
-                      className={`w-16 h-16 ${stat.bgColor} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
-                      whileHover={{ rotate: 10 }}
-                    >
-                      <div className="text-3xl">{stat.icon}</div>
-                    </motion.div>
-                  </div>
-                  
-                  <motion.div 
-                    className={`text-5xl font-poppins font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-3 group-hover:scale-110 transition-transform duration-300`}
-                    initial={{ scale: 0 }}
-                    animate={isInView ? { scale: 1 } : {}}
-                    transition={{ duration: 0.8, delay: index * 0.15, type: "spring" }}
-                  >
-                    {stat.value}
-                  </motion.div>
-                  <p className="text-gray-600 font-inter font-semibold leading-tight">
-                    {stat.label}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Enhanced Testimonial Section */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center"
-        >
-          <div className="bg-gradient-mesh rounded-3xl p-12 md:p-16 text-white relative overflow-hidden shadow-2xl">
-            {/* Background Elements */}
-            <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-            <div className="absolute top-0 right-0 w-64 h-64 bg-orange/15 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-400/15 rounded-full blur-2xl" />
-            
-            <div className="relative z-10">
-              <motion.div variants={itemVariants} className="mb-8">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="inline-block mb-6"
-                >
-                  <Award className="w-16 h-16 text-orange" />
-                </motion.div>
-                <h3 className="heading-lg font-poppins mb-4 text-shadow-lg">
-                  What Our Clients Say
-                </h3>
-              </motion.div>
-
-              <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
-                <blockquote className="text-2xl md:text-3xl font-inter leading-relaxed text-white/95 mb-8 italic">
-                  &ldquo;Krupa Engineering Enterprise consistently delivers exceptional quality and reliability. 
-                  Their expertise in industrial equipment manufacturing is unmatched.&rdquo;
-                </blockquote>
-                <div className="flex items-center justify-center gap-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <span className="text-xl font-bold">CEO</span>
-                  </div>
-                  <div className="text-left">
-                    <div className="font-poppins font-bold text-lg">Leading Industrial Client</div>
-                    <div className="text-white/80 font-inter">Manufacturing Sector</div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+            <p className="text-body-md text-gray-600 mb-6">
+              Experience the same level of excellence that has made us the preferred choice 
+              for industry leaders worldwide.
+            </p>
+            <button className="btn-primary">
+              Get Started Today
+            </button>
           </div>
         </motion.div>
       </div>

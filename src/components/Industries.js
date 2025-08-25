@@ -1,6 +1,5 @@
 'use client';
 
-import { industries } from '../data/products';
 import { 
   Fuel, 
   Pill, 
@@ -9,39 +8,79 @@ import {
   Factory, 
   Utensils,
   ArrowRight,
-  TrendingUp,
-  BarChart3,
-  Star
+  TrendingUp
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { useState } from 'react';
 
 const Industries = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-
-  const iconMap = {
-    Oil: Fuel,
-    Pill: Pill,
-    Flask: FlaskRound,
-    Zap: Zap,
-    Factory: Factory,
-    Utensils: Utensils
-  };
-
-  const colorMap = {
-    'from-blue-600 to-blue-800': 'from-blue-600 via-blue-700 to-blue-800',
-    'from-green-600 to-green-800': 'from-green-600 via-green-700 to-green-800', 
-    'from-purple-600 to-purple-800': 'from-purple-600 via-purple-700 to-purple-800',
-    'from-yellow-600 to-yellow-800': 'from-orange-600 via-orange-700 to-orange-800',
-    'from-gray-600 to-gray-800': 'from-gray-600 via-gray-700 to-gray-800',
-    'from-orange-600 to-orange-800': 'from-orange-600 via-orange-700 to-orange-800'
-  };
+  const industries = [
+    {
+      id: 1,
+      name: "Oil & Gas",
+      icon: Fuel,
+      description: "Comprehensive solutions for upstream, midstream, and downstream operations including drilling equipment, pipelines, and refining systems.",
+      color: "from-blue-500 to-blue-600",
+      bgColor: "from-blue-50 to-blue-100",
+      features: ["Drilling Equipment", "Pipeline Systems", "Refining Solutions", "Safety Systems"],
+      projects: 150,
+      experience: "25+ years"
+    },
+    {
+      id: 2,
+      name: "Pharmaceutical",
+      icon: Pill,
+      description: "GMP-compliant equipment for pharmaceutical manufacturing including reactors, crystallizers, and purification systems.",
+      color: "from-green-500 to-green-600",
+      bgColor: "from-green-50 to-green-100",
+      features: ["GMP Equipment", "Reactor Systems", "Purification Units", "Clean Room Solutions"],
+      projects: 85,
+      experience: "20+ years"
+    },
+    {
+      id: 3,
+      name: "Chemical",
+      icon: FlaskRound,
+      description: "Advanced chemical processing equipment for various industries including reactors, heat exchangers, and separation systems.",
+      color: "from-purple-500 to-purple-600",
+      bgColor: "from-purple-50 to-purple-100",
+      features: ["Chemical Reactors", "Heat Exchangers", "Separation Systems", "Process Control"],
+      projects: 200,
+      experience: "30+ years"
+    },
+    {
+      id: 4,
+      name: "Power Generation",
+      icon: Zap,
+      description: "Reliable equipment for thermal, nuclear, and renewable energy power plants including boilers, turbines, and cooling systems.",
+      color: "from-yellow-500 to-yellow-600",
+      bgColor: "from-yellow-50 to-yellow-100",
+      features: ["Boiler Systems", "Turbine Equipment", "Cooling Systems", "Control Panels"],
+      projects: 120,
+      experience: "28+ years"
+    },
+    {
+      id: 5,
+      name: "Manufacturing",
+      icon: Factory,
+      description: "Custom manufacturing solutions for automotive, aerospace, and general manufacturing industries.",
+      color: "from-gray-500 to-gray-600",
+      bgColor: "from-gray-50 to-gray-100",
+      features: ["Automotive Solutions", "Aerospace Equipment", "Assembly Lines", "Quality Control"],
+      projects: 180,
+      experience: "22+ years"
+    },
+    {
+      id: 6,
+      name: "Food & Beverage",
+      icon: Utensils,
+      description: "Hygienic food processing equipment including mixers, cookers, and packaging systems for food safety compliance.",
+      color: "from-orange-500 to-orange-600",
+      bgColor: "from-orange-50 to-orange-100",
+      features: ["Food Processing", "Hygienic Design", "Packaging Systems", "Quality Assurance"],
+      projects: 95,
+      experience: "18+ years"
+    }
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -49,255 +88,147 @@ const Industries = () => {
       opacity: 1,
       transition: {
         duration: 0.8,
-        staggerChildren: 0.15
+        staggerChildren: 0.2,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
     }
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, x: -50, scale: 0.9 },
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: (i) => ({
       opacity: 1,
-      x: 0,
+      y: 0,
       scale: 1,
       transition: {
-        duration: 0.8,
-        delay: i * 0.15,
-        ease: "easeOut",
-        type: "spring",
-        stiffness: 100
+        delay: i * 0.1,
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     })
   };
 
   return (
-    <section id="industries" className="section-padding relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
-      {/* Enhanced Background Elements */}
-      <div className="absolute top-[15%] left-[5%] w-[350px] h-[350px] bg-gradient-radial from-purple-400/8 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-[20%] right-[8%] w-[400px] h-[400px] bg-gradient-radial from-blue-400/8 to-transparent rounded-full blur-3xl" />
-      <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-orange/3 to-transparent rounded-full blur-3xl" />
-      <div className="absolute inset-0 bg-dots-pattern opacity-[0.015]" />
-
-      {/* Floating Tech Elements */}
-      <div className="absolute top-[25%] right-[15%] w-20 h-20 bg-gradient-to-br from-blue-400/10 to-purple-500/5 rounded-full animate-float blur-sm" />
-      <div className="absolute bottom-[35%] left-[20%] w-16 h-16 bg-gradient-to-br from-orange/10 to-yellow-500/5 rounded-full animate-float blur-sm" style={{ animationDelay: '1.5s' }} />
-
-      <div className="container mx-auto px-6 lg:px-8 relative z-10" ref={ref}>
-        {/* Enhanced Header */}
-        <motion.div 
+    <section id="industries" className="section-standard bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <div className="container-balanced">
+        <motion.div
+          className="text-center mb-12"
           variants={containerVariants}
           initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="text-center mb-20"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
         >
-          <motion.div variants={itemVariants} className="mb-8">
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 border border-blue-500/20 mb-8">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <TrendingUp className="w-5 h-5 text-blue-600" />
-              </motion.div>
-              <span className="text-blue-600 font-inter font-bold text-sm tracking-[0.15em]">INDUSTRY EXPERTISE</span>
-              <BarChart3 className="w-4 h-4 text-blue-600" />
-            </div>
-          </motion.div>
-
-          <motion.h2 
-            variants={itemVariants}
-            className="heading-xl font-poppins text-navy-blue mb-8 leading-none"
-          >
-            Industries We
-            <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 bg-clip-text text-transparent relative">
-              Empower
-              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
-            </span>
-          </motion.h2>
-          
-          <motion.p 
-            variants={itemVariants}
-            className="text-body-lg text-gray-600 max-w-4xl mx-auto leading-relaxed font-inter"
-          >
-            Delivering specialized engineering solutions across diverse industrial sectors, 
-            driving innovation and efficiency in every project we undertake.
-          </motion.p>
+          {/* Section Header */}
+          <h2 className="heading-lg text-gray-900 mb-4">
+            Industries We <span className="text-gradient-primary">Serve</span>
+          </h2>
+          <p className="text-body-md text-gray-600 max-w-2xl mx-auto">
+            We provide specialized solutions across diverse industries, leveraging our expertise 
+            to deliver innovative equipment that meets unique sector requirements.
+          </p>
         </motion.div>
 
-        {/* Enhanced Industries Grid */}
-        <motion.div 
+        {/* Industries Grid */}
+        <motion.div
+          className="grid-balanced grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
           variants={containerVariants}
           initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
         >
-          {industries.map((industry, index) => {
-            const IconComponent = iconMap[industry.icon];
-            const gradientClass = colorMap[industry.color] || industry.color;
-            
-            return (
-              <motion.div
-                key={industry.id}
-                custom={index}
-                variants={cardVariants}
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                onHoverStart={() => setHoveredIndex(index)}
-                onHoverEnd={() => setHoveredIndex(null)}
-                className="group cursor-pointer"
-                whileHover={{ y: -12, scale: 1.02 }}
-                transition={{ duration: 0.4, type: "spring", stiffness: 300 }}
-              >
-                <div className={`relative bg-gradient-to-br ${gradientClass} p-8 rounded-3xl text-white h-full transform transition-all duration-500 overflow-hidden shadow-card hover:shadow-2xl`}>
-                  {/* Enhanced Background Patterns */}
-                  <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/10" />
-                  
-                  {/* Enhanced Floating Elements */}
-                  <div className="absolute top-6 right-6 w-20 h-20 bg-white/5 rounded-full animate-float opacity-60" />
-                  <div className="absolute bottom-6 left-6 w-16 h-16 bg-white/8 rounded-full animate-float opacity-80" style={{ animationDelay: '1s' }} />
-                  <div className="absolute top-1/2 left-8 w-8 h-8 bg-white/10 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
-                  
-                  {/* Enhanced Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
-                  
-                  <div className="relative z-10">
-                    {/* Enhanced Header */}
-                    <div className="flex items-center justify-between mb-8">
-                      <motion.div 
-                        className="w-24 h-24 bg-white/15 backdrop-blur-sm rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform duration-400 shadow-lg group-hover:shadow-2xl"
-                        animate={{
-                          rotate: hoveredIndex === index ? 12 : 0,
-                          scale: hoveredIndex === index ? 1.15 : 1
-                        }}
-                        transition={{ duration: 0.4, type: "spring", stiffness: 300 }}
-                      >
-                        {IconComponent && <IconComponent className="w-12 h-12 text-white drop-shadow-2xl" />}
-                        {/* Icon Glow */}
-                        <div className="absolute inset-0 bg-white/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      </motion.div>
-                      <motion.div 
-                        className="text-8xl font-poppins font-black text-white/10 group-hover:text-white/20 transition-colors duration-400"
-                        animate={{
-                          scale: hoveredIndex === index ? 1.2 : 1,
-                          rotate: hoveredIndex === index ? 5 : 0
-                        }}
-                        transition={{ duration: 0.4 }}
-                      >
-                        {String(index + 1).padStart(2, '0')}
-                      </motion.div>
-                    </div>
-
-                    {/* Enhanced Content */}
-                    <div className="mb-6">
-                      <h3 className="text-3xl font-poppins font-bold mb-4 group-hover:text-orange-200 transition-colors duration-400">
-                        {industry.name}
-                      </h3>
-                      <p className="text-white/90 font-inter leading-relaxed text-lg">
-                        {industry.description}
-                      </p>
-                    </div>
-
-                    {/* Enhanced CTA */}
-                    <motion.div 
-                      className="flex items-center text-white/80 group-hover:text-white transition-colors duration-400"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ 
-                        opacity: hoveredIndex === index ? 1 : 0.6,
-                        x: hoveredIndex === index ? 0 : -20
-                      }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      <div className="flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full group-hover:bg-white/20 transition-all duration-300">
-                        <span className="font-inter font-semibold">Explore Solutions</span>
-                        <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-400" />
-                      </div>
-                    </motion.div>
-
-                    {/* Quality Badge */}
-                    <div className="absolute top-6 left-6 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full">
-                      <span className="text-white/90 text-xs font-inter font-bold tracking-wider">CERTIFIED</span>
-                    </div>
-                  </div>
+          {industries.map((industry, index) => (
+            <motion.div
+              key={industry.id}
+              className="card-elevated group relative overflow-hidden"
+              variants={cardVariants}
+              custom={index}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Background Gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${industry.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              
+              {/* Content */}
+              <div className="relative z-10">
+                {/* Icon */}
+                <div className={`icon-container bg-gradient-to-br ${industry.color} mx-auto mb-3`}>
+                  <industry.icon className="w-5 h-5 text-white" />
                 </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
 
-        {/* Enhanced Stats Section */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="relative"
-        >
-          <div className="bg-gradient-mesh rounded-3xl p-12 md:p-20 text-white relative overflow-hidden shadow-2xl">
-            {/* Enhanced Background Elements */}
-            <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-radial from-orange/15 to-transparent rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-60 h-60 bg-gradient-radial from-blue-400/10 to-transparent rounded-full blur-2xl" />
-            
-            <div className="relative z-10">
-              <motion.div variants={itemVariants} className="text-center mb-16">
-                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 border border-white/20 mb-8">
-                  <Star className="w-5 h-5 text-orange fill-orange" />
-                  <span className="text-white/90 font-inter font-bold text-sm tracking-[0.15em]">PROVEN EXCELLENCE</span>
-                  <div className="flex gap-1">
-                    {[...Array(3)].map((_, i) => (
-                      <Star key={i} className="w-3 h-3 text-orange fill-orange" />
-                    ))}
-                  </div>
-                </div>
-                <h3 className="heading-lg font-poppins mb-6 text-shadow-lg">
-                  Why Industries Choose Us
+                {/* Title */}
+                <h3 className="heading-sm text-gray-900 mb-2 text-center group-hover:text-gray-700 transition-colors duration-200">
+                  {industry.name}
                 </h3>
-                <p className="text-body-lg text-white/90 font-inter max-w-2xl mx-auto">
-                  Delivering exceptional results across all sectors with unmatched expertise
-                </p>
-              </motion.div>
 
-              <motion.div 
-                variants={containerVariants}
-                className="grid grid-cols-2 md:grid-cols-4 gap-8"
-              >
-                {[
-                  { value: "99%", label: "Client Satisfaction", icon: "✓", delay: 0 },
-                  { value: "24/7", label: "Technical Support", icon: "⚡", delay: 0.1 },
-                  { value: "ISO", label: "Quality Certified", icon: "🏆", delay: 0.2 },
-                  { value: "500+", label: "Projects Delivered", icon: "📊", delay: 0.3 }
-                ].map((stat) => (
-                  <motion.div
-                    key={stat.label}
-                    variants={itemVariants}
-                    className="text-center group"
-                    whileHover={{ y: -6, scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <div className="mb-4">
-                      <motion.div 
-                        className="text-6xl md:text-7xl font-poppins font-black bg-gradient-to-br from-orange via-orange-400 to-orange-600 bg-clip-text text-transparent mb-3 group-hover:scale-110 transition-transform duration-300 text-shadow-xl"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: inView ? 1 : 0 }}
-                        transition={{ duration: 0.8, delay: stat.delay, type: "spring", stiffness: 200 }}
-                      >
-                        {stat.value}
-                      </motion.div>
-                      <div className="text-2xl mb-2">{stat.icon}</div>
+                {/* Description */}
+                <p className="text-body-sm text-gray-600 mb-3 text-center leading-relaxed">
+                  {industry.description}
+                </p>
+
+                {/* Features */}
+                <div className="space-y-2 mb-4">
+                  {industry.features.map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
+                      <span>{feature}</span>
                     </div>
-                    <p className="text-white/90 font-inter font-semibold text-lg leading-tight">{stat.label}</p>
-                  </motion.div>
-                ))}
-              </motion.div>
+                  ))}
+                </div>
+
+                {/* Stats */}
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <div className="text-sm text-gray-500">
+                    <span className="font-medium">{industry.projects}</span> projects
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    <span className="font-medium">{industry.experience}</span> experience
+                  </div>
+                </div>
+
+                {/* Hover Action */}
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors duration-200" />
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Call to Action */}
+        <motion.div
+          className="text-center mt-16"
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <div className="card-elevated max-w-2xl mx-auto">
+            <div className="icon-container mx-auto mb-4">
+              <TrendingUp className="w-6 h-6 text-white" />
             </div>
+            <h3 className="heading-md text-gray-900 mb-3">
+              Need a Custom Solution?
+            </h3>
+            <p className="text-body-md text-gray-600 mb-6">
+              Don&apos;t see your industry listed? We specialize in custom engineering solutions 
+              for unique requirements across all sectors.
+            </p>
+            <button className="btn-primary">
+              Discuss Your Needs
+            </button>
           </div>
         </motion.div>
       </div>
