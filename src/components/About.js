@@ -87,11 +87,23 @@ const About = () => {
         >
           {/* Section Header */}
           <h2 className="heading-lg text-gray-900 mb-4">
-            About <span className="text-gradient-primary">Krupa Engineering</span>
+            About <span className="text-gradient-primary">Krupa Engineering Enterprise</span>
           </h2>
           <p className="text-body-md text-gray-600 max-w-2xl mx-auto">
-            Leading manufacturer of industrial equipment and custom fabrication solutions. 
-            Delivering quality, innovation, and reliability since 1995.
+            We are one of the leading engineering service providers for special types of equipment designing, 
+            manufacturing, fabrication, and mechanical maintenance. Committed to quality services with our 
+            fully equipped workshop in GIDC Ankleshwar.
+          </p>
+          
+          <p className="text-body-md text-gray-600 mb-6 leading-relaxed">
+            Our workshop & office at GIDC Ankleshwar is fully equipped with all modern equipment, tools, 
+            and other infrastructure backed by our efficient team of engineers, supervisors and workers. 
+            We aim at perfection in every job we undertake and complete in record time.
+          </p>
+          
+          <p className="text-body-md text-gray-600 mb-6 leading-relaxed">
+            Our work is appreciated by those companies and with their continuous patronage we are growing 
+            further to play a supporting role for the major industries in India.
           </p>
         </motion.div>
 

@@ -8,42 +8,35 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     const handleScroll = () => {
       if (typeof window !== 'undefined') {
-      setScrolled(window.scrollY > 80);
-      
-      // Update active section based on scroll position
+        setScrolled(window.scrollY > 80);
         if (typeof document !== 'undefined') {
-          try {
-      const sections = ['home', 'about', 'products', 'industries', 'why-us', 'clients', 'gallery', 'contact'];
-      const current = sections.find(section => {
-        const element = document.querySelector(`#${section}`);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-                // Adjusted threshold for mobile devices
-                return rect.top <= 150 && rect.bottom >= 150;
-        }
-        return false;
-      });
-      if (current) setActiveSection(current);
-          } catch (error) {
-            console.warn('Error updating active section:', error);
-          }
+          const sections = ['home', 'about', 'products', 'industries', 'why-us', 'clients', 'gallery', 'contact'];
+          const current = sections.find(section => {
+            const element = document.querySelector(`#${section}`);
+            if (element) {
+              const rect = element.getBoundingClientRect();
+              return rect.top <= 150 && rect.bottom >= 150;
+            }
+            return false;
+          });
+          if (current) setActiveSection(current);
         }
       }
     };
-
-    // Close mobile menu when scrolling
+    
     const handleScrollClose = () => {
       if (isOpen) {
         setIsOpen(false);
       }
     };
-
+    
     if (typeof window !== 'undefined') {
-      // Add passive listener for better mobile performance
       window.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener('scroll', handleScrollClose, { passive: true });
       return () => {
@@ -65,47 +58,25 @@ const Navbar = () => {
   ];
 
   const scrollToSection = (href) => {
-    if (typeof document !== 'undefined') {
-    const element = document.querySelector(href);
-    if (element) {
-        // Close mobile menu first
+    if (isClient && typeof document !== 'undefined') {
+      const element = document.querySelector(href);
+      if (element) {
         setIsOpen(false);
-        
-        // Add a small delay to ensure menu closes before scrolling
         setTimeout(() => {
-          element.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
+          try {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } catch {
+            element.scrollIntoView({ block: 'start' });
+          }
         }, 100);
       }
     }
   };
 
-  // Enhanced mobile navigation function
   const handleMobileNavigation = (href) => {
-    // Close mobile menu immediately
     setIsOpen(false);
-    
-    // Small delay to ensure smooth transition
     setTimeout(() => {
-      if (typeof document !== 'undefined') {
-        const element = document.querySelector(href);
-        if (element) {
-          try {
-            // Try smooth scrolling first
-            element.scrollIntoView({ 
-              behavior: 'smooth',
-              block: 'start'
-            });
-          } catch {
-            // Fallback to instant scroll if smooth scrolling fails
-            element.scrollIntoView({ 
-              block: 'start'
-            });
-          }
-        }
-      }
+      scrollToSection(href);
     }, 150);
   };
 

@@ -110,7 +110,12 @@ const WhyChooseUs = () => {
           </h2>
           <p className="text-body-md text-gray-600 max-w-2xl mx-auto">
             We don&apos;t just build equipment; we build partnerships. Our commitment to excellence, 
-            innovation, and customer satisfaction sets us apart in the industry.
+            quality services, and customer satisfaction sets us apart in the industry.
+          </p>
+          
+          <p className="text-body-md text-gray-600 mb-6">
+            Our workshop at GIDC Ankleshwar is fully equipped with all modern equipment, tools, 
+            and infrastructure backed by our efficient team of engineers, supervisors and workers.
           </p>
         </motion.div>
 

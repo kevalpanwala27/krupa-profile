@@ -8,8 +8,13 @@ const Footer = () => {
   const [currentYear, setCurrentYear] = useState('');
 
   useEffect(() => {
-    setCurrentYear(new Date().getFullYear().toString());
+    if (typeof window !== 'undefined') {
+      setCurrentYear(new Date().getFullYear().toString());
+    }
   }, []);
+
+  // Only render the year when it's available on the client
+  const yearDisplay = currentYear || '2024';
 
   const footerSections = [
     {
@@ -81,6 +86,13 @@ const Footer = () => {
     }
   };
 
+  const socialLinks = [
+    { name: "Facebook", href: "#", icon: Facebook },
+    { name: "Twitter", href: "#", icon: Twitter },
+    { name: "LinkedIn", href: "#", icon: Linkedin },
+    { name: "Instagram", href: "#", icon: Instagram }
+  ];
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container-balanced py-12">
@@ -97,49 +109,30 @@ const Footer = () => {
             className="lg:col-span-2"
             variants={itemVariants}
           >
-            <h3 className="heading-md text-white mb-3">
-              Krupa Engineering Enterprise
-            </h3>
-            
+            <h3 className="heading-md text-white mb-3">Krupa Engineering Enterprise</h3>
             <p className="text-body-md text-gray-300 mb-4 leading-relaxed">
-              Leading manufacturer of industrial equipment and custom fabrication solutions. 
-              Delivering quality, innovation, and reliability since 1995.
+              Leading engineering service provider for special types of equipment designing, 
+              manufacturing, fabrication, and mechanical maintenance. Committed to quality services.
             </p>
-
-            {/* Contact Info */}
-            <div className="space-y-2">
-              <div className="flex items-center space-x-3">
-                <Phone className="w-4 h-4 text-orange-400" />
-                <span className="text-gray-300 text-sm">+91 9825077239</span>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <Mail className="w-4 h-4 text-orange-400" />
-                <span className="text-gray-300 text-sm">krupa.eng.ent@gmail.com</span>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <MapPin className="w-4 h-4 text-orange-400" />
-                <span className="text-gray-300 text-sm">
-                  K-1/209/2 GIDC IND ESTATE, Ankleshwar, Bharuch 393002
-                </span>
-              </div>
+            <div className="flex items-center gap-2 mb-2">
+              <MapPin className="w-4 h-4 text-orange-400" />
+              <span className="text-gray-300 text-sm">GIDC Ankleshwar, Bharuch</span>
             </div>
-
-            {/* Social Media Links */}
-            <div className="flex space-x-3 mt-4">
-              {[
-                { icon: Facebook, href: "#", label: "Facebook" },
-                { icon: Twitter, href: "#", label: "Twitter" },
-                { icon: Linkedin, href: "#", label: "LinkedIn" },
-                { icon: Instagram, href: "#", label: "Instagram" }
-              ].map((social) => (
+            <div className="flex items-center gap-2 mb-2">
+              <Phone className="w-4 h-4 text-orange-400" />
+              <span className="text-gray-300 text-sm">+91 9825077239</span>
+            </div>
+            <div className="flex items-center gap-2 mb-4">
+              <Mail className="w-4 h-4 text-orange-400" />
+              <span className="text-gray-300 text-sm">krupa.eng.ent@gmail.com</span>
+            </div>
+            <div className="flex space-x-3">
+              {socialLinks.map((social) => (
                 <motion.a
-                  key={social.label}
+                  key={social.name}
                   href={social.href}
-                  aria-label={social.label}
                   className="w-8 h-8 bg-gray-800 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-all duration-300 group"
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <social.icon className="w-4 h-4 text-gray-300 group-hover:text-white transition-colors duration-300" />
@@ -182,7 +175,7 @@ const Footer = () => {
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-body-sm text-gray-400 text-center md:text-left">
-              © {currentYear} Krupa Engineering Enterprise. All rights reserved.
+              © {yearDisplay} Krupa Engineering Enterprise. All rights reserved.
             </p>
             
             <div className="flex space-x-6 text-body-sm text-gray-400">

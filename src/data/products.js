@@ -1,51 +1,158 @@
+import { Package, Shield, Wrench, Settings, Zap, Filter, Droplets, Gauge, Brush, Truck, Box, Database, Building, Minus } from 'lucide-react';
+
+export const categories = [
+  { name: 'All', icon: Package },
+  { name: 'Valves & Plates', icon: Shield },
+  { name: 'Gaskets & Seals', icon: Wrench },
+  { name: 'Industrial Equipment', icon: Settings },
+  { name: 'Tools & Accessories', icon: Zap },
+  { name: 'Structures & Tanks', icon: Building }
+];
+
 export const products = [
   {
     id: 1,
-    title: "Heat Exchangers",
-    description: "Custom designed heat exchangers for various industrial applications",
-    sizes: "Custom sizes available",
-    moc: "Stainless Steel, Carbon Steel, Alloy Steel",
-    image: "/images/heat-exchanger.jpg"
+    name: 'Spectacle Blind',
+    description: 'High-quality spectacle blind for pipeline isolation and maintenance',
+    category: 'Valves & Plates',
+    icon: Shield,
+    image: '/images/products/spectacle-blind.png',
+    specs: ['Size: ½" to custom', 'MOC: SS304/316', 'Pressure rated']
   },
   {
     id: 2,
-    title: "Pressure Vessels",
-    description: "High-quality pressure vessels meeting ASME standards",
-    sizes: "Up to 5000mm diameter",
-    moc: "Carbon Steel, Stainless Steel, Alloy Steel",
-    image: "/images/pressure-vessel.jpg"
+    name: 'Orifice Plate',
+    description: 'Precision orifice plates for flow measurement and control',
+    category: 'Valves & Plates',
+    icon: Gauge,
+    image: '/images/products/orifice-plate.png',
+    specs: ['Size: ½" to custom', 'MOC: SS304/316', 'Accurate flow control']
   },
   {
     id: 3,
-    title: "Storage Tanks",
-    description: "Industrial storage tanks for various liquids and chemicals",
-    sizes: "1000L to 100,000L capacity",
-    moc: "Carbon Steel, Stainless Steel, FRP",
-    image: "/images/storage-tank.jpg"
+    name: 'Gasket',
+    description: 'Reliable sealing solutions for various industrial applications',
+    category: 'Gaskets & Seals',
+    icon: Wrench,
+    image: '/images/products/gasket.png',
+    specs: ['Custom sizes', 'MOC: Teflon, Rubber, CFT', 'High temperature']
   },
   {
     id: 4,
-    title: "Reactors",
-    description: "Chemical reactors for pharmaceutical and chemical industries",
-    sizes: "100L to 10,000L capacity",
-    moc: "Stainless Steel 316L, Hastelloy",
-    image: "/images/reactor.jpg"
+    name: 'Flange Guard',
+    description: 'Protective flange guards for safety and equipment protection',
+    category: 'Industrial Equipment',
+    icon: Shield,
+    image: '/images/products/flange-guard.png',
+    specs: ['Size: 15NB to custom', 'MOC: SS304/316', 'Safety compliant']
   },
   {
     id: 5,
-    title: "Distillation Columns",
-    description: "Fractional distillation columns for separation processes",
-    sizes: "Custom heights and diameters",
-    moc: "Stainless Steel, Carbon Steel",
-    image: "/images/distillation-column.jpg"
+    name: 'Earthing Jumper',
+    description: 'Electrical earthing jumpers for industrial safety',
+    category: 'Industrial Equipment',
+    icon: Zap,
+    image: '/images/products/earthing-jumper.png',
+    specs: ['Custom sizes', 'MOC: Copper, Aluminium, SS', 'Electrical grade']
   },
   {
     id: 6,
-    title: "Custom Fabrication",
-    description: "Specialized equipment and components as per client requirements",
-    sizes: "Custom specifications",
-    moc: "Various materials as per application",
-    image: "/images/custom-fabrication.jpg"
+    name: 'Stainers',
+    description: 'High-quality strainers for fluid filtration systems',
+    category: 'Industrial Equipment',
+    icon: Filter,
+    image: '/images/products/stainers.png',
+    specs: ['Custom sizes', 'MOC: All SS grades', 'High efficiency']
+  },
+  {
+    id: 7,
+    name: 'Cowl Dish',
+    description: 'Specialized cowl dishes with optional hardening',
+    category: 'Industrial Equipment',
+    icon: Droplets,
+    image: '/images/products/cowl-dish.png',
+    specs: ['Custom sizes', 'MOC: SS304/316', 'Hardening optional']
+  },
+  {
+    id: 8,
+    name: 'Drum Discharge Valve',
+    description: 'Reliable drum discharge valves for material handling',
+    category: 'Valves & Plates',
+    icon: Package,
+    image: '/images/products/drum-discharge-valve.png',
+    specs: ['Size: 1", 1.5", 2" to custom', 'MOC: MS, SS', 'Heavy duty']
+  },
+  {
+    id: 9,
+    name: 'Cleaning Brush',
+    description: 'Industrial cleaning brushes for various applications',
+    category: 'Tools & Accessories',
+    icon: Brush,
+    image: '/images/products/cleaning-brush.png',
+    specs: ['Custom sizes', 'MOC: Aluminium, MS, SS', 'Durable']
+  },
+  {
+    id: 10,
+    name: 'Mopping Trolley',
+    description: 'Industrial mopping trolleys for facility maintenance',
+    category: 'Tools & Accessories',
+    icon: Truck,
+    image: '/images/products/mopping-trolley.png',
+    specs: ['Standard sizes', 'MOC: MS, SS', 'Maneuverable']
+  },
+  {
+    id: 11,
+    name: 'Charging Hoppers & Filling Pot',
+    description: 'Material handling equipment for industrial processes',
+    category: 'Industrial Equipment',
+    icon: Box,
+    image: '/images/products/charging-hoppers.png',
+    specs: ['Custom sizes', 'MOC: MS, SS', 'High capacity']
+  },
+  {
+    id: 12,
+    name: 'Header',
+    description: 'Industrial headers for fluid distribution systems',
+    category: 'Structures & Tanks',
+    icon: Minus,
+    image: '/images/products/header.png',
+    specs: ['Custom sizes', 'MOC: MS, SS', 'Pressure rated']
+  },
+  {
+    id: 13,
+    name: 'Storage Tank',
+    description: 'Custom storage tanks for various industrial applications',
+    category: 'Structures & Tanks',
+    icon: Database,
+    image: '/images/products/storage-tank.png',
+    specs: ['Custom sizes', 'MOC: MS, SS', 'Corrosion resistant']
+  },
+  {
+    id: 14,
+    name: 'Industrial Structure',
+    description: 'Custom industrial structures and support systems',
+    category: 'Structures & Tanks',
+    icon: Building,
+    image: '/images/products/industrial-structure.png',
+    specs: ['Custom design', 'MOC: MS, SS', 'Structural grade']
+  },
+  {
+    id: 15,
+    name: 'Lid & Capping Pressing Machine/Mixer',
+    description: 'Specialized machinery for product packaging and mixing',
+    category: 'Industrial Equipment',
+    icon: Settings,
+    image: '/images/products/lid-capping-machine.png',
+    specs: ['Custom design', 'MOC: MS, SS', 'Automated']
+  },
+  {
+    id: 16,
+    name: 'SS Pipe & Pipe Fitments',
+    description: 'Stainless steel pipes and fittings for industrial applications',
+    category: 'Structures & Tanks',
+    icon: Minus,
+    image: '/images/products/ss-pipe-fitments.png',
+    specs: ['Custom sizes', 'MOC: SS304/316', 'High quality']
   }
 ];
 

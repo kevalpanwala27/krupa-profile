@@ -8,12 +8,17 @@ import Gallery from '../components/Gallery';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import ClientOnly from '../components/ClientOnly';
 
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <Navbar />
-      <Hero />
+      <ClientOnly>
+        <Navbar />
+      </ClientOnly>
+      <ClientOnly>
+        <Hero />
+      </ClientOnly>
       <About />
       <Products />
       <Industries />
@@ -21,7 +26,9 @@ export default function Home() {
       <Clients />
       <Gallery />
       <Contact />
-      <Footer />
+      <ClientOnly>
+        <Footer />
+      </ClientOnly>
     </div>
   );
 }

@@ -137,7 +137,12 @@ const Industries = () => {
           </h2>
           <p className="text-body-md text-gray-600 max-w-2xl mx-auto">
             We provide specialized solutions across diverse industries, leveraging our expertise 
-            to deliver innovative equipment that meets unique sector requirements.
+            in equipment design and manufacturing to deliver innovative solutions that meet unique sector requirements.
+          </p>
+          
+          <p className="text-body-md text-gray-600 mb-6">
+            Our products and services are designed to meet the demanding requirements of major industries 
+            across India, ensuring quality, reliability, and performance in every application.
           </p>
         </motion.div>
 

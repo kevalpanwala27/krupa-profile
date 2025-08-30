@@ -33,25 +33,29 @@ const Hero = () => {
 
   // Pre-calculated positions for ambient particles to avoid hydration issues
   const ambientParticlePositions = useMemo(() => {
-    const positions = [];
-    for (let i = 0; i < 60; i++) {
-      // Use deterministic values based on index instead of Math.random()
-      const seed = i * 67890; // Different seed for ambient particles
-      const x = ((seed * 13) % 1920) + (i * 17) % 100;
-      const y = ((seed * 19) % 1080) + (i * 23) % 100;
-      const delay = (seed % 8) + (i * 0.3);
-      const duration = 15 + (seed % 15);
-      const yOffset = 50 + (seed % 100);
-      
-      positions.push({
-        x: Math.min(x, 1920),
-        y: Math.min(y, 1080),
-        delay: delay,
-        duration: duration,
-        yOffset: yOffset
-      });
-    }
-    return positions;
+    return [
+      {
+        id: 1,
+        x: 100,
+        y: 100,
+        size: 200,
+        delay: 0
+      },
+      {
+        id: 2,
+        x: 800,
+        y: 300,
+        size: 150,
+        delay: 1
+      },
+      {
+        id: 3,
+        x: 1500,
+        y: 200,
+        size: 180,
+        delay: 2
+      }
+    ];
   }, []);
 
   useEffect(() => {
@@ -59,27 +63,27 @@ const Hero = () => {
 
     const handleScroll = () => {
       if (typeof window !== 'undefined') {
-      const scrolled = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrolled / maxScroll) * 100;
-      setScrollProgress(progress);
+        const scrolled = window.scrollY;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrolled / maxScroll) * 100;
+        setScrollProgress(progress);
       }
     };
 
     if (typeof window !== 'undefined') {
-    window.addEventListener('scroll', handleScroll);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+      window.addEventListener('scroll', handleScroll);
+      
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
     }
   }, []);
 
   const scrollToProducts = () => {
     if (typeof document !== 'undefined') {
-    const element = document.querySelector('#products');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const element = document.querySelector('#products');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
       }
     }
   };
@@ -220,23 +224,15 @@ const Hero = () => {
         animate="visible"
           >
             {/* Centered Main Heading */}
-            <motion.h1
-              className="heading-xl text-white mb-6 text-center max-w-4xl mx-auto leading-tight"
-              variants={itemVariants}
-            >
-              Transforming Industries Through
-              <span className="text-gradient-primary block mt-2">Innovative Engineering</span>
+            <motion.h1 className="heading-xl text-white mb-6 text-center max-w-4xl mx-auto leading-tight">
+              Leading Engineering Service Provider for
+              <span className="text-gradient-primary block mt-2">Special Equipment Design & Manufacturing</span>
             </motion.h1>
-
-            {/* Centered Subtitle */}
-            <motion.p
-              className="text-body-md text-white/70 mb-8 max-w-2xl mx-auto leading-relaxed text-center"
-              variants={itemVariants}
-            >
-              We deliver cutting-edge solutions that revolutionize how businesses operate. 
-              From advanced automation to sustainable technologies, we&apos;re your partner in 
-              building the future.
-            </motion.p>
+            <p className="text-body-md text-white/70 mb-8 max-w-2xl mx-auto leading-relaxed text-center">
+              We are one of the leading engineering service providers for special types of equipment designing, 
+              manufacturing, fabrication, and mechanical maintenance. Committed to quality services with our 
+              fully equipped workshop in GIDC Ankleshwar.
+            </p>
 
             {/* Centered CTA Buttons */}
         <motion.div 
@@ -318,15 +314,15 @@ const Hero = () => {
         </motion.div>
       </motion.div>
 
-      {/* Progress Bar */}
-      {isClient && (
+      {/* Progress Bar - Only render after client-side hydration */}
+        {isClient && (
           <motion.div
-          ref={progressBarRef}
-          className="fixed top-0 left-0 w-full h-0.5 bg-gradient-to-r from-orange-500 to-red-500 origin-left z-50"
-          style={{ scaleX: scrollProgress / 100 }}
-          transition={{ duration: 0.1 }}
-        />
-      )}
+            ref={progressBarRef}
+            className="fixed top-0 left-0 w-full h-0.5 bg-gradient-to-r from-orange-500 to-red-500 origin-left z-50"
+            style={{ scaleX: scrollProgress / 100 }}
+            transition={{ duration: 0.1 }}
+          />
+        )}
     </section>
   );
 };

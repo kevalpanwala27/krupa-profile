@@ -30,6 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${poppins.variable} ${inter.variable} font-inter antialiased overflow-x-hidden`}
+        suppressHydrationWarning={true}
       >
         {children}
       </body>

@@ -154,8 +154,8 @@ const Gallery = () => {
             See Our Work in <span className="text-gradient-primary">Action</span>
           </h2>
           <p className="text-body-md text-gray-600 max-w-2xl mx-auto">
-            Explore our state-of-the-art facilities, advanced machinery, and finished products 
-            that showcase our commitment to quality and innovation.
+            Explore our state-of-the-art workshop, advanced manufacturing processes, and finished products 
+            that showcase our commitment to quality and precision engineering.
           </p>
         </motion.div>
 
