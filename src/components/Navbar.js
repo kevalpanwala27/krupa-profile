@@ -16,7 +16,7 @@ const Navbar = () => {
       if (typeof window !== 'undefined') {
         setScrolled(window.scrollY > 80);
         if (typeof document !== 'undefined') {
-          const sections = ['home', 'about', 'products', 'industries', 'why-us', 'clients', 'gallery', 'contact'];
+          const sections = ['home', 'about', 'products', 'industries', 'clients', 'contact'];
           const current = sections.find(section => {
             const element = document.querySelector(`#${section}`);
             if (element) {
@@ -51,9 +51,7 @@ const Navbar = () => {
     { name: 'About', href: '#about' },
     { name: 'Products', href: '#products' },
     { name: 'Industries', href: '#industries' },
-    { name: 'Why Us', href: '#why-us' },
     { name: 'Clients', href: '#clients' },
-    { name: 'Gallery', href: '#gallery' },
     { name: 'Contact', href: '#contact' }
   ];
 

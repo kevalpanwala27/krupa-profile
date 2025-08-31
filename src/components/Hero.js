@@ -1,62 +1,13 @@
 'use client';
 
-import { Zap, Settings, ArrowRight, Play, Star, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { ArrowRight, Play, TrendingUp, Users, Award, Clock, ChevronDown } from 'lucide-react';
 
 const Hero = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const progressBarRef = useRef(null);
-
-  // Enhanced motion values for smoother interactions
-  // Pre-calculated positions for tech grid particles to avoid hydration issues
-  const techGridPositions = useMemo(() => {
-    const positions = [];
-    for (let i = 0; i < 30; i++) {
-      // Use deterministic values based on index instead of Math.random()
-      const seed = i * 12345; // Simple seed for deterministic randomness
-      const top = ((seed * 7) % 100) + (i * 3.33) % 20;
-      const left = ((seed * 11) % 100) + (i * 2.5) % 15;
-      const delay = (seed % 8) + (i * 0.5);
-      const duration = 8 + (seed % 8);
-      
-      positions.push({
-        top: Math.min(top, 95),
-        left: Math.min(left, 95),
-        delay: delay,
-        duration: duration
-      });
-    }
-    return positions;
-  }, []);
-
-  // Pre-calculated positions for ambient particles to avoid hydration issues
-  const ambientParticlePositions = useMemo(() => {
-    return [
-      {
-        id: 1,
-        x: 100,
-        y: 100,
-        size: 200,
-        delay: 0
-      },
-      {
-        id: 2,
-        x: 800,
-        y: 300,
-        size: 150,
-        delay: 1
-      },
-      {
-        id: 3,
-        x: 1500,
-        y: 200,
-        size: 180,
-        delay: 2
-      }
-    ];
-  }, []);
 
   useEffect(() => {
     setIsClient(true);
@@ -82,6 +33,15 @@ const Hero = () => {
   const scrollToProducts = () => {
     if (typeof document !== 'undefined') {
       const element = document.querySelector('#products');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const scrollToAbout = () => {
+    if (typeof document !== 'undefined') {
+      const element = document.querySelector('#about');
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
@@ -163,166 +123,218 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
-      {/* Refined Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white/3 via-transparent to-white/3 opacity-60"></div>
-      
-      {/* Refined Gradient Orbs - Much more subtle */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-orange-500/5 to-pink-500/5 rounded-full blur-2xl animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-gradient-to-r from-blue-500/5 to-cyan-500/5 rounded-full blur-2xl animate-pulse delay-1000"></div>
-      
-      {/* Refined Floating Elements - Much smaller and subtle */}
-        {techGridPositions.map((particle, index) => (
-      <motion.div 
-            key={`tech-${index}`}
-            className="absolute w-1 h-1 bg-orange-400/20 rounded-full"
-            style={{
-              top: `${particle.top}%`,
-              left: `${particle.left}%`,
-            }}
+    <section id="home" className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+      {/* Progress Bar */}
+      {isClient && (
+        <motion.div
+          ref={progressBarRef}
+          className="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 origin-left z-50"
+          style={{ scaleX: scrollProgress / 100 }}
+          transition={{ duration: 0.1 }}
+        />
+      )}
+
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        {/* Geometric Shapes */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-40 right-20 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 left-1/4 w-24 h-24 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-full blur-3xl"></div>
+        
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+      </div>
+
+      <div className="relative z-10 min-h-screen flex items-center">
+        <div className="container-balanced">
+          <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen py-20">
+            
+            {/* Left Column - Content */}
+            <motion.div
+              className="space-y-8"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              {/* Main Headline */}
+              <motion.h1
+                className="text-5xl lg:text-7xl font-bold text-white leading-tight"
+                variants={itemVariants}
+              >
+                Engineering
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-orange-400">
+                  Excellence
+                </span>
+                <span className="block text-4xl lg:text-5xl text-slate-300 font-normal">
+                  Since 1995
+                </span>
+              </motion.h1>
+
+              {/* Description */}
+              <motion.p
+                className="text-xl text-slate-300 leading-relaxed max-w-2xl"
+                variants={itemVariants}
+              >
+                We are one of the leading engineering service providers for special types of equipment designing, 
+                manufacturing, fabrication, and mechanical maintenance. Committed to quality services with our 
+                fully equipped workshop in GIDC Ankleshwar.
+              </motion.p>
+
+              {/* CTA Buttons */}
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4"
+                variants={itemVariants}
+              >
+                <motion.button
+                  onClick={scrollToProducts}
+                  className="btn-primary text-lg px-8 py-4 group"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  Explore Products
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+                </motion.button>
+                
+                <motion.button
+                  onClick={scrollToAbout}
+                  className="btn-secondary text-lg px-8 py-4 group"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  <Play className="w-5 h-5 mr-2" />
+                  Learn More
+                </motion.button>
+              </motion.div>
+
+              {/* Stats */}
+              <motion.div
+                className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8"
+                variants={itemVariants}
+              >
+                {[
+                  { number: '500+', label: 'Projects Delivered', icon: TrendingUp },
+                  { number: '50+', label: 'Industries Served', icon: Users },
+                  { number: '99%', label: 'Client Satisfaction', icon: Award },
+                  { number: '25+', label: 'Years Experience', icon: Clock }
+                ].map((stat, index) => (
+                  <motion.div
+                    key={stat.label}
+                    className="text-center group"
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:from-orange-500/30 group-hover:to-red-500/30 transition-all duration-300">
+                      <stat.icon className="w-6 h-6 text-orange-400" />
+                    </div>
+                    <div className="text-2xl font-bold text-white mb-1">{stat.number}</div>
+                    <div className="text-sm text-slate-400">{stat.label}</div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            {/* Right Column - Visual Elements */}
+            <motion.div
+              className="relative hidden lg:block"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              {/* Main Visual Container */}
+              <div className="relative w-full h-[600px] bg-gradient-to-br from-slate-800/50 to-slate-700/50 rounded-3xl border border-slate-600/30 overflow-hidden">
+                
+                {/* Floating Elements */}
+                <motion.div
+                  className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-orange-500/30 to-red-500/30 rounded-full"
+                  animate={{
+                    y: [0, -20, 0],
+                    rotate: [0, 180, 360],
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                <motion.div
+                  className="absolute bottom-32 left-16 w-24 h-24 bg-gradient-to-br from-blue-500/30 to-purple-500/30 rounded-full"
+                  animate={{
+                    y: [0, 20, 0],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+
+                {/* Central Icon */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <motion.div
+                    className="w-48 h-48 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-full flex items-center justify-center border border-orange-500/30"
+                    animate={{
+                      scale: [1, 1.1, 1],
+                      rotate: [0, 5, -5, 0],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <div className="w-32 h-32 bg-gradient-to-br from-orange-500/30 to-red-500/30 rounded-full flex items-center justify-center">
+                      <TrendingUp className="w-16 h-16 text-orange-400" />
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Corner Accents */}
+                <div className="absolute top-6 right-6 w-16 h-16 border-t-2 border-r-2 border-orange-500/50 rounded-tr-2xl"></div>
+                <div className="absolute bottom-6 left-6 w-16 h-16 border-b-2 border-l-2 border-blue-500/50 rounded-bl-2xl"></div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        variants={scrollIndicatorVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.div
+          className="w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center"
+          animate={{
+            y: [0, 10, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <motion.div
+            className="w-1 h-3 bg-slate-400 rounded-full mt-2"
             animate={{
-              opacity: [0.2, 0.8, 0.2],
-              scale: [0.8, 1.2, 0.8],
+              y: [0, 12, 0],
             }}
             transition={{
-              duration: particle.duration,
-              delay: particle.delay,
+              duration: 2,
               repeat: Infinity,
               ease: "easeInOut"
             }}
           />
-        ))}
-
-        {ambientParticlePositions.map((particle, index) => (
-      <motion.div 
-            key={`ambient-${index}`}
-            className="absolute w-0.5 h-0.5 bg-blue-400/15 rounded-full"
-            style={{
-              x: particle.x,
-              y: particle.y,
-            }}
-            animate={{
-              y: [particle.y, particle.y - particle.yOffset],
-              opacity: [0.1, 0.6, 0.1],
-            }}
-            transition={{
-              duration: particle.duration,
-              delay: particle.delay,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-        ))}
-
-      {/* Centered Main Content */}
-      <div className="relative z-10 w-full flex items-center justify-center">
-        <div className="container-balanced">
-      <motion.div
-            className="max-w-5xl mx-auto text-center"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-          >
-            {/* Centered Main Heading */}
-            <motion.h1 className="heading-xl text-white mb-6 text-center max-w-4xl mx-auto leading-tight">
-              Leading Engineering Service Provider for
-              <span className="text-gradient-primary block mt-2">Special Equipment Design & Manufacturing</span>
-            </motion.h1>
-            <p className="text-body-md text-white/70 mb-8 max-w-2xl mx-auto leading-relaxed text-center">
-              We are one of the leading engineering service providers for special types of equipment designing, 
-              manufacturing, fabrication, and mechanical maintenance. Committed to quality services with our 
-              fully equipped workshop in GIDC Ankleshwar.
-            </p>
-
-            {/* Centered CTA Buttons */}
-        <motion.div 
-              className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-12 mx-auto"
-          variants={itemVariants}
-        >
-          <motion.button
-                className="btn-primary text-sm px-5 py-2.5"
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
-            onClick={scrollToProducts}
-              >
-                <span className="flex items-center gap-2">
-                  Explore Solutions
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-          </motion.button>
-          
-          <motion.button
-                className="btn-secondary text-sm px-5 py-2.5"
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
-              >
-                <span className="flex items-center gap-2">
-                  <Play className="w-3.5 h-3.5" />
-                  Watch Demo
-                </span>
-          </motion.button>
-        </motion.div>
-
-            {/* Centered Stats Section */}
-            <motion.div
-              className="grid-balanced grid-cols-2 md:grid-cols-4 max-w-2xl mx-auto pt-4 border-t border-white/8"
-              variants={itemVariants}
-            >
-              {[
-                { number: '500+', label: 'Projects Delivered', icon: Star },
-                { number: '50+', label: 'Industries Served', icon: Settings },
-                { number: '99%', label: 'Client Satisfaction', icon: Zap },
-                { number: '24/7', label: 'Support Available', icon: Shield }
-              ].map((stat) => (
-                <motion.div
-                  key={stat.label}
-                  className="text-center group"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="icon-container-secondary mx-auto mb-2">
-                    <stat.icon className="w-5 h-5 text-orange-400" />
-                  </div>
-                  <div className="text-xl font-bold text-white mb-1">{stat.number}</div>
-                  <div className="text-white/60 text-xs">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Centered Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-6 left-1/2 transform -translate-x-1/2"
-        variants={scrollIndicatorVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div
-          className="w-5 h-8 border border-white/20 rounded-full flex justify-center"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <motion.div
-            className="w-0.5 h-2 bg-white/40 rounded-full mt-2"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
         </motion.div>
       </motion.div>
-
-      {/* Progress Bar - Only render after client-side hydration */}
-        {isClient && (
-          <motion.div
-            ref={progressBarRef}
-            className="fixed top-0 left-0 w-full h-0.5 bg-gradient-to-r from-orange-500 to-red-500 origin-left z-50"
-            style={{ scaleX: scrollProgress / 100 }}
-            transition={{ duration: 0.1 }}
-          />
-        )}
     </section>
   );
 };

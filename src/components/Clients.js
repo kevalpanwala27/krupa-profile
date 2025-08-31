@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Building2, Users, Star, Award, Globe, TrendingUp } from 'lucide-react';
+import { Building2, Users, Star, Award, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
 const Clients = () => {
@@ -130,14 +130,16 @@ const Clients = () => {
   };
 
   return (
-    <section id="clients" className="section-standard bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+    <section id="clients" className="section-standard bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,106,0,0.03)_0%,transparent_50%)]"></div>
-      <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-orange-100 to-red-100 rounded-full opacity-20 blur-3xl"></div>
-      <div className="absolute bottom-20 left-10 w-40 h-40 bg-gradient-to-br from-red-100 to-orange-100 rounded-full opacity-20 blur-3xl"></div>
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]"></div>
+      </div>
 
       <div className="container-balanced relative z-10">
-        {/* Enhanced Header Section */}
+        {/* Header Section */}
         <motion.div
           className="text-center mb-20"
           variants={containerVariants}
@@ -145,19 +147,32 @@ const Clients = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="heading-lg text-gray-900 mb-6">
-            Trusted by Industry <span className="text-gradient-primary">Leaders</span>
-          </h2>
-          <p className="text-body-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            We&apos;re proud to serve some of the biggest names across diverse industries including Oil & Gas, 
-            Chemical, Pharmaceutical, Paints, Engineering, and more. Our commitment to quality, innovation, 
-            and customer satisfaction has earned us the trust of leading companies nationwide.
-          </p>
+          <motion.h2 
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+            variants={itemVariants}
+          >
+            Trusted by
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">
+              Industry Leaders
+            </span>
+            <span className="block text-2xl md:text-3xl text-slate-300 font-normal mt-4">
+              Across India
+            </span>
+          </motion.h2>
+          
+          <motion.p 
+            className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed"
+            variants={itemVariants}
+          >
+            We have built long-term partnerships with leading companies across multiple industries. 
+            Our commitment to quality, reliability, and innovation has made us the preferred choice 
+            for critical engineering solutions.
+          </motion.p>
         </motion.div>
 
-        {/* Enhanced Stats Section */}
+        {/* Stats Section */}
         <motion.div
-          className="grid-balanced grid-cols-2 md:grid-cols-4 mb-20"
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -166,170 +181,124 @@ const Clients = () => {
           {stats.map((stat) => (
             <motion.div
               key={stat.label}
-              className="text-center group relative"
+              className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300"
               variants={itemVariants}
               whileHover={{ scale: 1.05, y: -5 }}
-              transition={{ duration: 0.3 }}
             >
-              {/* Background glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"></div>
-              
-              <div className="relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100 group-hover:shadow-lg group-hover:border-orange-200 transition-all duration-300">
-                <div className="icon-container mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <stat.icon className="w-6 h-6 text-white group-hover:rotate-3 transition-transform duration-300" />
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors duration-300">{stat.number}</div>
-                <div className="text-gray-600 text-sm font-medium">{stat.label}</div>
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <stat.icon className="w-6 h-6 text-orange-400" />
               </div>
+              <div className="text-3xl font-bold text-white mb-2">{stat.number}</div>
+              <div className="text-slate-300 font-medium">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Enhanced Continuous Scrolling Marquee */}
+        {/* Featured Clients Grid */}
         <motion.div
-          className="mb-20 overflow-hidden"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <div className="relative">
-            {/* Marquee Container with enhanced styling */}
-            <div className="flex animate-marquee whitespace-nowrap">
-              {/* First set of logos */}
-              {marqueeClients.map((client, index) => (
-                <div
-                  key={`first-${index}`}
-                  className="flex-shrink-0 mx-4 px-6 py-4 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-orange-200 transition-all duration-300 hover:scale-105"
-                >
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center mb-3 mx-auto group-hover:from-orange-200 group-hover:to-red-200 transition-all duration-300 overflow-hidden">
-                      {/* Show company logo if available, otherwise show Building2 icon */}
-                      {client.logo ? (
-                        <Image 
-                          src={client.logo} 
-                          alt={client.name}
-                          width={80}
-                          height={80}
-                          className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
-                        />
-                      ) : (
-                        <Building2 className="w-10 h-10 text-orange-600" />
-                      )}
-                    </div>
-                    <p className="text-sm font-semibold text-gray-800 max-w-[140px] leading-tight">
-                      {client.name}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              
-              {/* Duplicate set for seamless loop */}
-              {marqueeClients.map((client, index) => (
-                <div
-                  key={`second-${index}`}
-                  className="flex-shrink-0 mx-4 px-6 py-4 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-orange-200 transition-all duration-300 hover:scale-105"
-                >
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center mb-3 mx-auto group-hover:from-orange-200 group-hover:to-red-200 transition-all duration-300 overflow-hidden">
-                      {/* Show company logo if available, otherwise show Building2 icon */}
-                      {client.logo ? (
-                        <Image 
-                          src={client.logo} 
-                          alt={client.name}
-                          width={80}
-                          height={80}
-                          className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
-                        />
-                      ) : (
-                        <Building2 className="w-10 h-10 text-orange-600" />
-                      )}
-                    </div>
-                    <p className="text-sm font-semibold text-gray-800 max-w-[140px] leading-tight">
-                      {client.name}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Enhanced Clients Grid */}
-        <motion.div
-          className="grid-balanced grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-20"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
           {clients.map((client) => (
-            <motion.div 
+            <motion.div
               key={client.name}
-              className="card-elevated group relative overflow-hidden"
+              className="group relative"
               variants={cardVariants}
               whileHover={{ scale: 1.03, y: -8 }}
               transition={{ duration: 0.3 }}
             >
-              {/* Background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-red-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Background glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"></div>
               
-              {/* Content */}
-              <div className="relative z-10">
-                {/* Client Header */}
-                <div className="flex items-start justify-between mb-5">
-                  <div className="flex-1">
-                    <h3 className="heading-sm text-gray-900 mb-3 group-hover:text-orange-600 transition-colors duration-200">
-                      {client.name}
-                    </h3>
-                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-orange-100 to-red-100 text-orange-700 text-xs font-semibold rounded-full border border-orange-200">
-                      {client.industry}
-                    </span>
-                  </div>
-                  
-                  {/* Company Logo */}
-                  <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center ml-4 group-hover:from-orange-200 group-hover:to-red-200 transition-all duration-300 overflow-hidden">
-                    {/* Show company logo if available, otherwise show Building2 icon */}
+              <div className="relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 group-hover:border-white/20 transition-all duration-300 h-full">
+                {/* Client Logo */}
+                <div className="flex items-center justify-center mb-6">
+                  <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center p-4 group-hover:bg-white/20 transition-all duration-300">
                     {client.logo ? (
-                      <Image 
-                        src={client.logo} 
+                      <Image
+                        src={client.logo}
                         alt={client.name}
                         width={48}
                         height={48}
-                        className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
-                      <Building2 className="w-8 h-8 text-orange-600" />
+                      <Building2 className="w-10 h-10 text-orange-400" />
                     )}
                   </div>
                 </div>
                 
-                {/* Testimonial */}
-                <div className="mb-6">
-                  <div className="flex items-center mb-3">
-                    {[...Array(client.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                    ))}
+                {/* Client Info */}
+                <div className="text-center space-y-4">
+                  <h3 className="text-xl font-bold text-white group-hover:text-orange-400 transition-colors duration-300">
+                    {client.name}
+                  </h3>
+                  
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-500/20 border border-orange-500/30 rounded-full">
+                    <span className="text-sm text-orange-400 font-medium">{client.industry}</span>
                   </div>
-                  <p className="text-body-sm text-gray-600 leading-relaxed italic">
-                    &ldquo;{client.testimonial}&rdquo;
+                  
+                  <p className="text-slate-300 text-sm leading-relaxed line-clamp-4">
+                    {client.testimonial}
                   </p>
-                </div>
-                
-                {/* Project Stats */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <Globe className="w-4 h-4" />
-                    <span>{client.industry}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-green-600 font-medium">
-                    <TrendingUp className="w-4 h-4" />
-                    <span>{client.projects} Projects</span>
+                  
+                  {/* Rating and Projects */}
+                  <div className="flex items-center justify-center gap-6 pt-4 border-t border-white/10">
+                    <div className="flex items-center gap-1">
+                      {[...Array(client.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                      ))}
+                    </div>
+                    <div className="text-sm text-slate-400">
+                      {client.projects} projects
+                    </div>
                   </div>
                 </div>
               </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Marquee Section */}
+        <motion.div
+          className="mb-20"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h3
+            className="text-2xl font-bold text-white text-center mb-12"
+            variants={itemVariants}
+          >
+            Our Valued Partners
+          </motion.h3>
+          
+          <div className="relative overflow-hidden">
+            <div className="flex animate-marquee space-x-8">
+              {marqueeClients.map((client) => (
+                <div
+                  key={client.name}
+                  className="flex-shrink-0 w-32 h-20 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 flex items-center justify-center p-4 hover:bg-white/10 transition-all duration-300"
+                >
+                  {client.logo ? (
+                    <Image
+                      src={client.logo}
+                      alt={client.name}
+                      width={80}
+                      height={40}
+                      className="w-full h-full object-contain"
+                    />
+                  ) : (
+                    <Building2 className="w-8 h-8 text-orange-400" />
+                  )}
+                </div>
+            ))}
+            </div>
+          </div>
         </motion.div>
 
         {/* Call to Action */}
@@ -340,26 +309,27 @@ const Clients = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <div className="card-elevated max-w-2xl mx-auto relative overflow-hidden">
+          <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-12 border border-white/10 relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+            
             <div className="relative z-10">
-              <div className="icon-container mx-auto mb-6">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="heading-md text-gray-900 mb-4">
-                Ready to Join Our Client Family?
+              <h3 className="text-3xl font-bold text-white mb-4">
+                Ready to Join Our Success Stories?
               </h3>
-              <p className="text-body-lg text-gray-600 mb-8 leading-relaxed">
-                Experience the same level of excellence that has made us the preferred choice 
-                for industry leaders across India. Let&apos;s build something amazing together.
+              <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+                Let&apos;s discuss your project requirements and see how we can help you achieve 
+                your engineering goals with our proven expertise and quality solutions.
               </p>
               <motion.a
                 href="#contact"
-                className="btn-primary inline-flex items-center gap-2 group"
+                className="btn-primary text-lg px-8 py-4 inline-flex items-center gap-2 group"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get Started Today
-                <TrendingUp className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                Start Your Project
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
               </motion.a>
             </div>
           </div>
