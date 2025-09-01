@@ -120,57 +120,6 @@ const Contact = () => {
           </motion.p>
         </motion.div>
 
-        {/* Contact Information Grid */}
-          <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20"
-            variants={containerVariants}
-            initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          {contactInfo.map((info, index) => (
-                  <motion.div
-              key={info.title}
-              className="group relative"
-                    variants={cardVariants}
-              whileHover={{ scale: 1.03, y: -8 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Background glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-white rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"></div>
-              
-              <div className="relative bg-white rounded-3xl p-6 shadow-sm border border-slate-100 group-hover:shadow-xl group-hover:border-slate-200 transition-all duration-300 h-full">
-                {/* Icon */}
-                <div className="w-12 h-12 bg-gradient-to-br from-teal-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <info.icon className="w-6 h-6 text-teal-600" />
-                </div>
-                
-                {/* Content */}
-                <h3 className="text-lg font-bold text-slate-900 mb-3 group-hover:text-slate-700 transition-colors duration-300">
-                            {info.title}
-                </h3>
-                
-                          {info.link ? (
-                            <a
-                              href={info.link}
-                    className="text-teal-600 font-medium hover:text-teal-700 transition-colors duration-300 block mb-2"
-                            >
-                              {info.value}
-                            </a>
-                          ) : (
-                  <p className="text-slate-700 font-medium mb-2">
-                    {info.value}
-                  </p>
-                )}
-                
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  {info.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-          </motion.div>
-
         {/* Contact Person Section */}
           <motion.div
           className="mb-20"
@@ -229,40 +178,6 @@ const Contact = () => {
             </div>
             </div>
           </motion.div>
-
-        {/* Call to Action */}
-        <motion.div
-          className="text-center"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl p-12 border border-slate-200 relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-teal-500/10 to-cyan-500/10 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl"></div>
-            
-            <div className="relative z-10">
-              <h3 className="text-3xl font-bold text-slate-900 mb-4">
-                Ready to Start Your Project?
-            </h3>
-              <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
-                Let&apos;s discuss your engineering requirements and create innovative solutions together. 
-                Our team is ready to help you achieve your goals.
-              </p>
-              <motion.a
-                href={`tel:${contactPerson.phone}`}
-                className="btn-primary text-lg px-8 py-4 inline-flex items-center gap-2 group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Call Us Now
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
-              </motion.a>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
