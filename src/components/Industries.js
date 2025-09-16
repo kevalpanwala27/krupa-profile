@@ -109,7 +109,7 @@ const Industries = () => {
   };
 
   return (
-    <section id="industries" className="section-standard bg-gradient-to-br from-white via-slate-50 to-white relative overflow-hidden">
+    <section id="industries" className="section-standard scroll-offset bg-gradient-to-br from-white via-slate-50 to-white relative overflow-visible md:overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full opacity-20 blur-3xl"></div>
@@ -150,7 +150,7 @@ const Industries = () => {
 
         {/* Stats Section */}
         <motion.div 
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16 md:mb-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -170,12 +170,11 @@ const Industries = () => {
         </motion.div>
 
         {/* Industries Grid */}
-                      <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          animate="visible"
         >
           {industries.map((industry, index) => (
                       <motion.div 

@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 
 const VarietiesModal = ({ isOpen, onClose, product }) => {
-  if (!product) return null;
 
   // Close on Escape for better UX
   useEffect(() => {
@@ -17,6 +16,27 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   }, [isOpen, onClose]);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const body = document.body;
+    if (isOpen) {
+      body.style.overflow = 'hidden';
+      body.style.touchAction = 'none';
+    } else {
+      body.style.overflow = '';
+      body.style.touchAction = '';
+    }
+    return () => {
+      body.style.overflow = '';
+      body.style.touchAction = '';
+    };
+  }, [isOpen]);
+
+  if (!isOpen || !product) {
+    return null;
+  }
 
   const modalVariants = {
     hidden: { opacity: 0, scale: 0.8, y: 50 },

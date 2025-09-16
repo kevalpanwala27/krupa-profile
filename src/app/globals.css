@@ -447,6 +447,11 @@ body {
   color: inherit;
 }
 
+/* Anchor scroll offset for fixed navbar (approx 72px) */
+.scroll-offset {
+  scroll-margin-top: 4.5rem;
+}
+
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   .animate-slideInUp,

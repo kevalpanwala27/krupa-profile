@@ -124,7 +124,7 @@ const Clients = () => {
   };
 
   return (
-    <section id="clients" className="section-standard bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+    <section id="clients" className="section-standard scroll-offset bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-visible md:overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full blur-3xl"></div>
@@ -190,11 +190,10 @@ const Clients = () => {
 
         {/* Featured Clients Grid */}
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16 md:mb-20"
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          animate="visible"
         >
           {clients.map((client) => (
             <motion.div
@@ -269,7 +268,7 @@ const Clients = () => {
           </motion.h3>
           
           <div className="relative overflow-hidden">
-            <div className="flex animate-marquee space-x-8">
+            <div className="flex animate-marquee space-x-6 sm:space-x-8">
               {marqueeClients.map((client) => (
                 <div
                   key={client.name}

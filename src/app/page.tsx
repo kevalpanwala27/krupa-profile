@@ -7,6 +7,7 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import ClientOnly from '../components/ClientOnly';
+import HashScroll from '../components/HashScroll';
 
 export default function Home() {
   return (
@@ -16,6 +17,9 @@ export default function Home() {
       </ClientOnly>
       <ClientOnly>
         <Hero />
+      </ClientOnly>
+      <ClientOnly>
+        <HashScroll />
       </ClientOnly>
       <About />
       <Products />

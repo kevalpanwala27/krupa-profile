@@ -81,7 +81,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="section-standard bg-gradient-to-br from-slate-50 via-white to-slate-50 relative overflow-hidden">
+    <section id="contact" className="section-standard scroll-offset bg-gradient-to-br from-slate-50 via-white to-slate-50 relative overflow-visible md:overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-teal-100 to-cyan-100 rounded-full opacity-20 blur-3xl"></div>

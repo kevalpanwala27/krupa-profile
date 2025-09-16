@@ -59,7 +59,7 @@ const Products = () => {
   };
 
   return (
-    <section id="products" className="section-standard bg-gradient-to-br from-slate-50 via-white to-slate-50 relative overflow-hidden">
+    <section id="products" className="section-standard scroll-offset bg-gradient-to-br from-slate-50 via-white to-slate-50 relative overflow-visible md:overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-full opacity-20 blur-3xl"></div>
@@ -102,11 +102,10 @@ const Products = () => {
 
         {/* Products Grid */}
         <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+          className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          animate="visible"
         >
           {products.map((product) => (
             <motion.div
@@ -134,7 +133,7 @@ const Products = () => {
               
               <div className="relative bg-white rounded-3xl p-6 shadow-sm border border-slate-100 group-hover:shadow-xl group-hover:border-slate-200 transition-all duration-300 h-full focus:outline-none focus:ring-2 focus:ring-orange-400">
                 {/* Product Image */}
-                <div className="relative w-full h-48 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl mb-6 overflow-hidden group-hover:from-slate-200 group-hover:to-slate-300 transition-all duration-300">
+                <div className="relative w-full h-44 sm:h-48 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl mb-6 overflow-hidden group-hover:from-slate-200 group-hover:to-slate-300 transition-all duration-300">
                   {product.image ? (
                     <Image
                       src={product.image}

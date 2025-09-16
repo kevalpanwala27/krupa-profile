@@ -46,6 +46,23 @@ const Navbar = () => {
     }
   }, [isOpen]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const body = document.body;
+    if (isOpen) {
+      body.style.overflow = 'hidden';
+      body.style.touchAction = 'none';
+    } else {
+      body.style.overflow = '';
+      body.style.touchAction = '';
+    }
+    return () => {
+      body.style.overflow = '';
+      body.style.touchAction = '';
+    };
+  }, [isOpen]);
+
   const navItems = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
@@ -56,19 +73,16 @@ const Navbar = () => {
   ];
 
   const scrollToSection = (href) => {
-    if (isClient && typeof document !== 'undefined') {
-      const element = document.querySelector(href);
-      if (element) {
-        setIsOpen(false);
-        setTimeout(() => {
-          try {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } catch {
-            element.scrollIntoView({ block: 'start' });
-          }
-        }, 100);
-      }
-    }
+    if (!isClient || typeof document === 'undefined' || typeof window === 'undefined') return;
+    const element = document.querySelector(href);
+    if (!element) return;
+    setIsOpen(false);
+    setTimeout(() => {
+      const rect = element.getBoundingClientRect();
+      const offset = 72; // approx navbar height
+      const top = rect.top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }, 100);
   };
 
   const handleMobileNavigation = (href) => {
