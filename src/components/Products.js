@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Eye } from 'lucide-react';
+import { ArrowRight, Eye, Tag, Layers } from 'lucide-react';
 import { products } from '../data/products';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -113,10 +113,12 @@ const Products = () => {
               key={product.id}
               className="group relative cursor-pointer"
               variants={cardVariants}
-              whileHover={{ scale: 1.03, y: -8 }}
+              whileHover={{ scale: 1.02, y: -8 }}
+              whileTap={{ scale: 0.995, y: -6 }}
               transition={{ duration: 0.3 }}
               role="button"
               tabIndex={0}
+              aria-label={`${product.name} - ${product.hasVarieties ? 'View varieties' : 'View details'}`}
               onClick={() => handleViewVarieties(product)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -138,7 +140,7 @@ const Products = () => {
                       src={product.image}
                       alt={product.name}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -146,26 +148,28 @@ const Products = () => {
                     </div>
                   )}
                   
-                  {/* Category/Varieties Badges - visible on hover only */}
-                  <div className="absolute top-3 left-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
-                    <div className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-slate-700 border border-slate-200">
-                      {product.category}
-                    </div>
-                    {product.hasVarieties && (
-                      <div className="px-3 py-1 bg-gradient-to-r from-orange-500/90 to-red-500/90 text-white rounded-full text-xs font-medium shadow">
-                        Varieties
-                      </div>
-                    )}
-                  </div>
-
                   {/* Desktop view hint overlay */}
-                  <div className="hidden md:flex absolute inset-0 items-end justify-end p-3">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="hidden md:flex absolute inset-0 items-end justify-end p-3 z-10 pointer-events-none">
+                    <div className="opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-focus:opacity-100 group-focus:translate-y-0 group-active:opacity-100 group-active:translate-y-0">
                       <div className="px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-slate-800 border border-slate-200 shadow-sm">
                         View {product.hasVarieties ? 'Varieties' : 'Details'}
                       </div>
                     </div>
                   </div>
+                </div>
+
+                {/* Category/Varieties Badges - contained within card frame */}
+                <div className="absolute top-3 left-3 right-3 z-20 pointer-events-none flex flex-wrap items-center gap-2 opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-focus:opacity-100 group-focus:translate-y-0 group-active:opacity-100 group-active:translate-y-0">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold text-slate-800 bg-white/85 backdrop-blur-md border border-white/60 shadow-sm">
+                    <Tag className="w-3.5 h-3.5 text-slate-500" />
+                    <span className="truncate max-w-[50%] sm:max-w-[10rem]">{product.category}</span>
+                  </div>
+                  {product.hasVarieties && (
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white bg-gradient-to-r from-orange-500 to-red-500 shadow-md ring-1 ring-white/20">
+                      <Layers className="w-3.5 h-3.5 text-white" />
+                      <span>Varieties</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Product Info */}

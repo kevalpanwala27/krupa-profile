@@ -1,11 +1,22 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Package, CheckCircle } from 'lucide-react';
+import { X, Package, CheckCircle, Layers, Tag } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 const VarietiesModal = ({ isOpen, onClose, product }) => {
   if (!product) return null;
+
+  // Close on Escape for better UX
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [isOpen, onClose]);
 
   const modalVariants = {
     hidden: { opacity: 0, scale: 0.8, y: 50 },
@@ -51,7 +62,7 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={`${product.name} details`}>
           {/* Backdrop */}
           <motion.div
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
@@ -80,11 +91,24 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
                   <div>
                     <h2 className="text-2xl font-bold">{product.name}</h2>
                     <p className="text-orange-100">{product.hasVarieties ? 'Available Varieties' : 'Product Details'}</p>
+                    <div className="mt-2 flex flex-wrap items-center gap-2">
+                      {product.category && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold text-orange-900 bg-white/90 text-opacity-90 border border-white/40">
+                          <Tag className="w-3.5 h-3.5" /> {product.category}
+                        </span>
+                      )}
+                      {product.hasVarieties && product.varieties && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white bg-white/20">
+                          <Layers className="w-3.5 h-3.5" /> {product.varieties.length} Varieties
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <button
                   onClick={onClose}
                   className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors duration-200"
+                  aria-label="Close"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -108,17 +132,21 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
                       animate="visible"
                     >
                       {/* Variety Image (optional) */}
-                      {variety.image && (
-                        <div className="relative w-full h-44 bg-slate-100 rounded-xl mb-5 overflow-hidden">
+                      <div className="relative w-full h-44 bg-slate-100 rounded-xl mb-5 overflow-hidden">
+                        {variety.image ? (
                           <Image
                             src={variety.image}
                             alt={variety.name}
                             fill
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                        </div>
-                      )}
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center text-slate-400">
+                            <Package className="w-10 h-10" />
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                      </div>
 
                       {/* Variety Header */}
                       <div className="flex items-start gap-3 mb-4">
@@ -138,13 +166,13 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
                       {/* Specifications */}
                       <div className="space-y-2">
                         <h4 className="text-sm font-semibold text-slate-700 mb-2">
-                          Specifications:
+                          Specifications
                         </h4>
                         <div className="space-y-1">
                           {variety.specs.map((spec, specIndex) => (
                             <div key={specIndex} className="flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 bg-orange-500 rounded-full flex-shrink-0"></div>
-                              <span className="text-sm text-slate-600">{spec}</span>
+                              <CheckCircle className="w-4 h-4 text-orange-500" />
+                              <span className="text-sm text-slate-700">{spec}</span>
                             </div>
                           ))}
                         </div>
@@ -181,17 +209,17 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
                     </div>
 
                     {product.description && (
-                      <p className="text-slate-600 leading-relaxed">{product.description}</p>
+                      <p className="text-slate-700 leading-relaxed">{product.description}</p>
                     )}
 
                     {product.specs && product.specs.length > 0 && (
-                      <div className="space-y-2">
-                        <h4 className="text-sm font-semibold text-slate-700">Key Specifications:</h4>
-                        <div className="space-y-1">
+                      <div className="space-y-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <h4 className="text-sm font-semibold text-slate-800">Key Specifications</h4>
+                        <div className="space-y-2">
                           {product.specs.map((spec, i) => (
                             <div key={i} className="flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
-                              <span className="text-sm text-slate-600">{spec}</span>
+                              <CheckCircle className="w-4 h-4 text-orange-500" />
+                              <span className="text-sm text-slate-700">{spec}</span>
                             </div>
                           ))}
                         </div>
