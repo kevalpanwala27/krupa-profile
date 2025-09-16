@@ -95,7 +95,7 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
 
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-5xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden"
+            className="relative w-full sm:max-w-5xl bg-white shadow-2xl overflow-hidden mx-2 sm:mx-0 h-[calc(100dvh-2rem)] sm:h-auto max-h-[100dvh] sm:max-h-[90vh] rounded-t-2xl sm:rounded-3xl"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
@@ -136,7 +136,7 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
             </div>
 
             {/* Content */}
-            <div className="relative p-6 max-h-[calc(90vh-120px)] overflow-y-auto">
+            <div className="relative p-4 sm:p-6 max-h-[calc(100dvh-8rem)] sm:max-h-[calc(90vh-120px)] overflow-y-auto overscroll-contain pb-24">
               {/* Subtle decorative background */}
               <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[radial-gradient(circle_at_20%_20%,#fb923c,transparent_25%),radial-gradient(circle_at_80%_0%,#ef4444,transparent_25%),radial-gradient(circle_at_50%_100%,#60a5fa,transparent_25%)]" />
               <div className="relative">
@@ -152,7 +152,7 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
                       animate="visible"
                     >
                       {/* Variety Image (optional) */}
-                      <div className="relative w-full h-44 bg-slate-100 rounded-xl mb-5 overflow-hidden">
+                      <div className="relative w-full h-36 sm:h-44 bg-slate-100 rounded-xl mb-5 overflow-hidden">
                         {variety.image ? (
                           <Image
                             src={variety.image}
@@ -203,7 +203,7 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
               ) : (
                 <div className="grid md:grid-cols-2 gap-6">
                   {/* Product Image */}
-                  <div className="relative w-full h-72 bg-slate-100 rounded-2xl overflow-hidden">
+                  <div className="relative w-full h-56 sm:h-72 bg-slate-100 rounded-2xl overflow-hidden">
                     {product.image ? (
                       <Image
                         src={product.image}
@@ -252,11 +252,11 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
             </div>
 
             {/* Footer */}
-            <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 p-6">
+            <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 p-4 sm:p-6">
               <div className="flex flex-col sm:flex-row gap-3 justify-end">
                 <button
                   onClick={onClose}
-                  className="px-6 py-3 bg-slate-200 text-slate-700 rounded-xl font-medium hover:bg-slate-300 transition-colors duration-200"
+                  className="px-5 py-3 bg-slate-200 text-slate-700 rounded-xl font-medium hover:bg-slate-300 transition-colors duration-200"
                 >
                   Close
                 </button>
@@ -269,7 +269,7 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
                     }
                     onClose();
                   }}
-                  className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl font-medium hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg"
+                  className="px-5 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl font-medium hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg"
                 >
                   Get Quote
                 </button>
