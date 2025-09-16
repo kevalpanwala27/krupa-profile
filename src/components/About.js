@@ -44,7 +44,7 @@ const About = () => {
   ];
 
   const stats = [
-    { number: "25+", label: "Years Experience" },
+    { number: `${new Date().getFullYear() - 1999}+`, label: "Years Experience" },
     { number: "500+", label: "Projects Completed" },
     { number: "50+", label: "Industries Served" },
     { number: "99%", label: "Client Satisfaction" }
@@ -115,7 +115,7 @@ const About = () => {
               Excellence
             </span>
             <span className="block text-2xl md:text-3xl text-slate-600 font-normal mt-4">
-              Since 1995
+              Since 1999
             </span>
           </motion.h2>
           

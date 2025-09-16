@@ -18,7 +18,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Krupa Engineering Enterprise - Industrial Equipment & Custom Fabrication",
-  description: "Leading manufacturer of industrial equipment and custom fabrication solutions. Delivering quality, innovation, and reliability since 1995.",
+  description: "Leading manufacturer of industrial equipment and custom fabrication solutions. Delivering quality, innovation, and reliability since 1999.",
 };
 
 export default function RootLayout({

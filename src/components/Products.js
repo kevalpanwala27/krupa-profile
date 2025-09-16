@@ -1,11 +1,25 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Eye } from 'lucide-react';
 import { products } from '../data/products';
 import Image from 'next/image';
+import { useState } from 'react';
+import VarietiesModal from './VarietiesModal';
 
 const Products = () => {
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleViewVarieties = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -84,6 +98,8 @@ const Products = () => {
           </motion.p>
         </motion.div>
 
+        
+
         {/* Products Grid */}
         <motion.div 
           className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
@@ -99,11 +115,22 @@ const Products = () => {
               variants={cardVariants}
               whileHover={{ scale: 1.03, y: -8 }}
               transition={{ duration: 0.3 }}
+              role="button"
+              tabIndex={0}
+              onClick={() => handleViewVarieties(product)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleViewVarieties(product);
+                }
+              }}
             >
               {/* Background glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-white rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"></div>
+              {/* Accent gradient ring */}
+              <div className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(251,146,60,0.35), rgba(239,68,68,0.35))', WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)', WebkitMaskComposite: 'xor', maskComposite: 'exclude', padding: 1 }} />
               
-              <div className="relative bg-white rounded-3xl p-6 shadow-sm border border-slate-100 group-hover:shadow-xl group-hover:border-slate-200 transition-all duration-300 h-full">
+              <div className="relative bg-white rounded-3xl p-6 shadow-sm border border-slate-100 group-hover:shadow-xl group-hover:border-slate-200 transition-all duration-300 h-full focus:outline-none focus:ring-2 focus:ring-orange-400">
                 {/* Product Image */}
                 <div className="relative w-full h-48 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl mb-6 overflow-hidden group-hover:from-slate-200 group-hover:to-slate-300 transition-all duration-300">
                   {product.image ? (
@@ -111,7 +138,7 @@ const Products = () => {
                       src={product.image}
                       alt={product.name}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -119,9 +146,25 @@ const Products = () => {
                     </div>
                   )}
                   
-                  {/* Category Badge */}
-                  <div className="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-slate-700">
-                    {product.category}
+                  {/* Category/Varieties Badges - visible on hover only */}
+                  <div className="absolute top-3 left-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
+                    <div className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-slate-700 border border-slate-200">
+                      {product.category}
+                    </div>
+                    {product.hasVarieties && (
+                      <div className="px-3 py-1 bg-gradient-to-r from-orange-500/90 to-red-500/90 text-white rounded-full text-xs font-medium shadow">
+                        Varieties
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Desktop view hint overlay */}
+                  <div className="hidden md:flex absolute inset-0 items-end justify-end p-3">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-slate-800 border border-slate-200 shadow-sm">
+                        View {product.hasVarieties ? 'Varieties' : 'Details'}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -146,6 +189,8 @@ const Products = () => {
                       ))}
                     </div>
                   )}
+
+                  {/* Card is fully clickable; no explicit button needed */}
                 </div>
               </div>
             </motion.div>
@@ -185,6 +230,13 @@ const Products = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Varieties Modal */}
+      <VarietiesModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        product={selectedProduct}
+      />
     </section>
   );
 };

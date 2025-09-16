@@ -7,52 +7,46 @@ import Image from 'next/image';
 const Clients = () => {
   const clients = [
     {
-      name: "PI Industries",
-      logo: "/images/clients/pi-industries.png",
-      industry: "Agrochemicals",
-      testimonial: "Exceptional quality and on-time delivery. Krupa Engineering has been our trusted partner for critical equipment.",
-      rating: 5,
-      projects: 28
+      name: "Galaxy Surfactants Ltd",
+      logo: "/images/clients/galaxy-global.png",
+      industry: "Chemicals",
+      testimonial: "Trusted partner delivering reliable equipment and service.",
+      rating: 5
     },
     {
-      name: "Aarti Industries Limited",
-      logo: "/images/clients/aarti-industries.png",
-      industry: "Chemical",
-      testimonial: "Professional team with deep technical expertise. They consistently exceed our expectations in quality.",
-      rating: 5,
-      projects: 22
-    },
-    {
-      name: "ONGC",
-      logo: "/images/clients/ongc.png",
-      industry: "Oil & Gas",
-      testimonial: "Reliable partner for critical equipment. Their attention to detail and safety standards are outstanding.",
-      rating: 5,
-      projects: 35
-    },
-    {
-      name: "Kansai Nerolac Paints Limited",
+      name: "Kansai Nerolac Paint Limited",
       logo: "/images/clients/nerolac.png",
       industry: "Paints & Coatings",
-      testimonial: "High-quality industrial equipment. Krupa Engineering understands our industry requirements perfectly.",
-      rating: 5,
-      projects: 18
+      testimonial: "High-quality solutions tailored to our industry needs.",
+      rating: 5
     },
     {
-      name: "Deepak Nitrite",
-      logo: "/images/clients/deepak-nitrite.png",
-      industry: "Chemical",
-      testimonial: "Excellent technical support and after-sales service. Highly recommended for chemical industry equipment.",
-      rating: 5,
-      projects: 25
+      name: "pidilite litokol private limited",
+      logo: "/images/clients/pidilite.png",
+      industry: "Adhesives & Building Materials",
+      testimonial: "Consistent quality and dependable timelines.",
+      rating: 5
     },
     {
-      name: "ISGEC Hitachi Zosen Limited",
-      logo: "/images/clients/isgec.png",
-      industry: "Engineering",
-      testimonial: "Dependable partner for heavy engineering equipment. Their engineering solutions are world-class.",
-      rating: 5,
-      projects: 20
+      name: "ICA pidilite pvt ltd",
+      logo: "/images/clients/ica-pidilite.png",
+      industry: "Coatings",
+      testimonial: "Professional team with strong technical expertise.",
+      rating: 5
+    },
+    {
+      name: "Air Liquide India Holding pvt ltd",
+      logo: "/images/clients/air-liquide.png",
+      industry: "Industrial Gases",
+      testimonial: "Reliable equipment and excellent support.",
+      rating: 5
+    },
+    {
+      name: "Cohizon Life sciences Ltd",
+      logo: "",
+      industry: "Life Sciences",
+      testimonial: "Responsive service and quality workmanship.",
+      rating: 5
     }
   ];
 
@@ -88,7 +82,7 @@ const Clients = () => {
     { number: "500+", label: "Happy Clients", icon: Users },
     { number: "1000+", label: "Projects Completed", icon: Building2 },
     { number: "99%", label: "Client Satisfaction", icon: Star },
-    { number: "25+", label: "Years Experience", icon: Award }
+    { number: `${new Date().getFullYear() - 1999}+`, label: "Years Experience", icon: Award }
   ];
 
   const containerVariants = {
@@ -245,15 +239,12 @@ const Clients = () => {
                     {client.testimonial}
                   </p>
                   
-                  {/* Rating and Projects */}
-                  <div className="flex items-center justify-center gap-6 pt-4 border-t border-white/10">
+                  {/* Rating */}
+                  <div className="flex items-center justify-center pt-4 border-t border-white/10">
                     <div className="flex items-center gap-1">
                       {[...Array(client.rating)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
                       ))}
-                    </div>
-                    <div className="text-sm text-slate-400">
-                      {client.projects} projects
                     </div>
                   </div>
                 </div>

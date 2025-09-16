@@ -167,7 +167,7 @@ const Hero = () => {
                   Excellence
                 </span>
                 <span className="block text-4xl lg:text-5xl text-slate-300 font-normal">
-                  Since 1995
+                  Since 1999
                 </span>
               </motion.h1>
 
@@ -218,7 +218,7 @@ const Hero = () => {
                   { number: '500+', label: 'Projects Delivered', icon: TrendingUp },
                   { number: '50+', label: 'Industries Served', icon: Users },
                   { number: '99%', label: 'Client Satisfaction', icon: Award },
-                  { number: '25+', label: 'Years Experience', icon: Clock }
+                  { number: `${new Date().getFullYear() - 1999}+`, label: 'Years Experience', icon: Clock }
                 ].map((stat, index) => (
                   <motion.div
                     key={stat.label}

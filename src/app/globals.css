@@ -476,7 +476,7 @@ body {
 }
 
 .animate-marquee {
-  animation: marquee 60s linear infinite;
+  animation: marquee 10s linear infinite;
 }
 
 /* Pause animation on hover for better UX */
