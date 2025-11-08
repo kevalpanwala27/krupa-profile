@@ -92,27 +92,27 @@ const Contact = () => {
       <div className="container-balanced relative z-10">
         {/* Header Section */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 md:mb-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight px-2"
             variants={itemVariants}
           >
             Let&apos;s Build
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-cyan-500">
               Something Amazing
             </span>
-            <span className="block text-2xl md:text-3xl text-slate-600 font-normal mt-4">
+            <span className="block text-xl sm:text-2xl md:text-3xl text-slate-600 font-normal mt-2 sm:mt-4">
               Together
             </span>
           </motion.h2>
           
           <motion.p 
-            className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed px-4"
             variants={itemVariants}
           >
             Ready to transform your business? Get in touch with our team of experts and let&apos;s discuss 
@@ -122,13 +122,13 @@ const Contact = () => {
 
         {/* Contact Person Section */}
           <motion.div
-          className="mb-20"
+          className="mb-12 sm:mb-16 md:mb-20"
           variants={containerVariants}
             initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-12 text-white relative overflow-hidden">
+          <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-white relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-teal-500/20 to-cyan-500/20 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-full blur-3xl"></div>
@@ -142,37 +142,37 @@ const Contact = () => {
                 </motion.div>
               
               <motion.h3
-                className="text-3xl font-bold mb-4"
+                className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4"
                 variants={itemVariants}
               >
                 {contactPerson.name}
               </motion.h3>
               
               <motion.p
-                className="text-xl text-slate-300 mb-6"
+                className="text-lg sm:text-xl text-slate-300 mb-4 sm:mb-6"
                 variants={itemVariants}
               >
                 {contactPerson.position}
               </motion.p>
               
               <motion.div
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center"
                 variants={itemVariants}
               >
                 <a
                   href={`tel:${contactPerson.phone}`}
-                  className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300"
+                  className="flex items-center gap-2 px-5 sm:px-6 py-3 bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 min-h-[44px] w-full sm:w-auto justify-center"
                 >
-                  <Phone className="w-5 h-5" />
-                  <span>{contactPerson.phone}</span>
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="text-sm sm:text-base">{contactPerson.phone}</span>
                 </a>
                 
                 <a
                   href={`mailto:${contactPerson.email}`}
-                  className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300"
+                  className="flex items-center gap-2 px-5 sm:px-6 py-3 bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 min-h-[44px] w-full sm:w-auto justify-center"
                 >
-                  <Mail className="w-5 h-5" />
-                  <span>{contactPerson.email}</span>
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="text-sm sm:text-base break-all">{contactPerson.email}</span>
                 </a>
               </motion.div>
             </div>

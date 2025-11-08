@@ -8,6 +8,7 @@ const poppins = Poppins({
   weight: ["400", "600", "700"],
   display: "swap",
   preload: false,
+  adjustFontFallback: true,
 });
 
 const inter = Inter({
@@ -16,6 +17,7 @@ const inter = Inter({
   weight: ["400", "600", "700"],
   display: "swap",
   preload: false,
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {

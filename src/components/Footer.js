@@ -101,10 +101,10 @@ const Footer = () => {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]"></div>
       </div>
 
-      <div className="container-balanced py-16 relative z-10">
+      <div className="container-balanced py-12 sm:py-16 relative z-10">
         {/* Main Footer Content */}
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16"
+          className="grid md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-12 mb-12 sm:mb-16"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -112,32 +112,32 @@ const Footer = () => {
         >
           {/* Company Info */}
           <motion.div className="lg:col-span-2" variants={itemVariants}>
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-4 sm:mb-6">
               <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-lg">K</span>
               </div>
-              <h3 className="text-2xl font-bold">Krupa Engineering</h3>
+              <h3 className="text-xl sm:text-2xl font-bold">Krupa Engineering</h3>
             </div>
             
-            <p className="text-slate-300 leading-relaxed mb-6">
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-4 sm:mb-6">
               We are one of the leading engineering service providers for special types of equipment 
               designing, manufacturing, fabrication, and mechanical maintenance. Committed to quality 
               services with our fully equipped workshop in GIDC Ankleshwar.
             </p>
             
             {/* Contact Info */}
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-orange-400" />
-                <span className="text-slate-300">+91 9825077239</span>
+                <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400 flex-shrink-0" />
+                <a href="tel:+919825077239" className="text-sm sm:text-base text-slate-300 hover:text-orange-400 transition-colors">+91 9825077239</a>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-orange-400" />
-                <span className="text-slate-300">krupa.eng.ent@gmail.com</span>
+                <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400 flex-shrink-0" />
+                <a href="mailto:krupa.eng.ent@gmail.com" className="text-sm sm:text-base text-slate-300 hover:text-orange-400 transition-colors break-all">krupa.eng.ent@gmail.com</a>
               </div>
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-orange-400 mt-1 flex-shrink-0" />
-                <span className="text-slate-300 text-sm">
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400 mt-1 flex-shrink-0" />
+                <span className="text-xs sm:text-sm text-slate-300">
                   K-1/209/2 GIDC IND ESTATE, Nr. G. Dalabhai Transpot, GIDC Ankleshwar, Bharuch 393002
                 </span>
               </div>
@@ -147,13 +147,13 @@ const Footer = () => {
           {/* Footer Sections */}
           {footerSections.map((section) => (
             <motion.div key={section.title} variants={itemVariants}>
-              <h4 className="text-lg font-bold text-white mb-6">{section.title}</h4>
-              <ul className="space-y-3">
+              <h4 className="text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">{section.title}</h4>
+              <ul className="space-y-2 sm:space-y-3">
                 {section.links.map((link) => (
                   <li key={link.name}>
                     <button
                       onClick={() => scrollToSection(link.href)}
-                      className="text-slate-300 hover:text-orange-400 transition-colors duration-300 text-sm hover:translate-x-1 transform transition-transform duration-200 flex items-center gap-2 group"
+                      className="text-slate-300 hover:text-orange-400 transition-colors duration-300 text-xs sm:text-sm hover:translate-x-1 transform transition-transform duration-200 flex items-center gap-2 group touch-manipulation min-h-[44px] sm:min-h-0"
                     >
                       <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-200" />
                       {link.name}
@@ -167,33 +167,33 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <motion.div
-          className="pt-8 border-t border-slate-700"
+          className="pt-6 sm:pt-8 border-t border-slate-700"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
             {/* Copyright */}
             <motion.div variants={itemVariants}>
-              <p className="text-slate-400 text-sm text-center md:text-left">
+              <p className="text-slate-400 text-xs sm:text-sm text-center md:text-left">
                 © {yearDisplay} Krupa Engineering Enterprise. All rights reserved.
               </p>
             </motion.div>
 
             {/* Social Links */}
             <motion.div
-              className="flex items-center gap-4"
+              className="flex items-center gap-3 sm:gap-4"
               variants={itemVariants}
             >
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
-                  className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 group"
+                  className="w-9 h-9 sm:w-10 sm:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 group touch-manipulation"
                   aria-label={social.name}
                 >
-                  <social.icon className="w-5 h-5 text-slate-300 group-hover:text-orange-400 transition-colors duration-300" />
+                  <social.icon className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300 group-hover:text-orange-400 transition-colors duration-300" />
                 </a>
               ))}
             </motion.div>

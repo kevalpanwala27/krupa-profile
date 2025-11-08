@@ -1,14 +1,5 @@
 import { Package, Shield, Wrench, Settings, Zap, Filter, Droplets, Gauge, Brush, Truck, Box, Database, Building, Minus } from 'lucide-react';
 
-export const categories = [
-  { name: 'All', icon: Package },
-  { name: 'Valves & Plates', icon: Shield },
-  { name: 'Gaskets & Seals', icon: Wrench },
-  { name: 'Industrial Equipment', icon: Settings },
-  { name: 'Tools & Accessories', icon: Zap },
-  { name: 'Structures & Tanks', icon: Building }
-];
-
 export const products = [
   {
     id: 14,
@@ -168,89 +159,4 @@ export const products = [
     image: '/images/products/ss-pipe-fitments.png',
     specs: ['Custom sizes', 'MOC: SS304/316', 'High quality']
   }
-];
-
-export const industries = [
-  {
-    id: 1,
-    name: "Oil & Gas",
-    description: "Equipment for upstream and downstream operations",
-    icon: "Oil",
-    color: "from-blue-600 to-blue-800"
-  },
-  {
-    id: 2,
-    name: "Pharmaceutical",
-    description: "GMP compliant equipment for drug manufacturing",
-    icon: "Pill",
-    color: "from-green-600 to-green-800"
-  },
-  {
-    id: 3,
-    name: "Chemical",
-    description: "Corrosion-resistant equipment for chemical processing",
-    icon: "Flask",
-    color: "from-purple-600 to-purple-800"
-  },
-  {
-    id: 4,
-    name: "Power Generation",
-    description: "Equipment for thermal and nuclear power plants",
-    icon: "Zap",
-    color: "from-yellow-600 to-yellow-800"
-  },
-  {
-    id: 5,
-    name: "Manufacturing",
-    description: "Industrial equipment for manufacturing processes",
-    icon: "Factory",
-    color: "from-gray-600 to-gray-800"
-  },
-  {
-    id: 6,
-    name: "Food & Beverage",
-    description: "Hygienic equipment for food processing",
-    icon: "Utensils",
-    color: "from-orange-600 to-orange-800"
-  }
-];
-
-export const whyChooseUs = [
-  {
-    id: 1,
-    title: "Quality Assurance",
-    description: "ISO 9001:2015 certified with rigorous quality control processes",
-    icon: "Shield",
-    color: "from-green-500 to-green-600"
-  },
-  {
-    id: 2,
-    title: "On-time Delivery",
-    description: "Commitment to meeting project deadlines and schedules",
-    icon: "Clock",
-    color: "from-blue-500 to-blue-600"
-  },
-  {
-    id: 3,
-    title: "Experienced Team",
-    description: "Skilled engineers and technicians with decades of experience",
-    icon: "Users",
-    color: "from-purple-500 to-purple-600"
-  },
-  {
-    id: 4,
-    title: "Modern Equipment",
-    description: "State-of-the-art machinery and advanced manufacturing capabilities",
-    icon: "Settings",
-    color: "from-orange-500 to-orange-600"
-  }
-];
-
-export const clients = [
-  { id: 1, name: "Client 1", logo: "/images/client1.png" },
-  { id: 2, name: "Client 2", logo: "/images/client2.png" },
-  { id: 3, name: "Client 3", logo: "/images/client1.png" },
-  { id: 4, name: "Client 4", logo: "/images/client2.png" },
-  { id: 5, name: "Client 5", logo: "/images/client1.png" },
-  { id: 6, name: "Client 6", logo: "/images/client2.png" }
 ];

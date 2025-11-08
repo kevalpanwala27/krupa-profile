@@ -158,7 +158,9 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
                             src={variety.image}
                             alt={variety.name}
                             fill
+                            sizes="(max-width: 640px) 100vw, 50vw"
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
                           />
                         ) : (
                           <div className="absolute inset-0 flex items-center justify-center text-slate-400">
@@ -209,7 +211,9 @@ const VarietiesModal = ({ isOpen, onClose, product }) => {
                         src={product.image}
                         alt={product.name}
                         fill
+                        sizes="(max-width: 640px) 100vw, 50vw"
                         className="object-cover"
+                        loading="lazy"
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center text-slate-400">

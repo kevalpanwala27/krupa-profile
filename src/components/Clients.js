@@ -135,27 +135,27 @@ const Clients = () => {
       <div className="container-balanced relative z-10">
         {/* Header Section */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 md:mb-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight px-2"
             variants={itemVariants}
           >
             Trusted by
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">
               Industry Leaders
             </span>
-            <span className="block text-2xl md:text-3xl text-slate-300 font-normal mt-4">
+            <span className="block text-xl sm:text-2xl md:text-3xl text-slate-300 font-normal mt-2 sm:mt-4">
               Across India
             </span>
           </motion.h2>
           
           <motion.p 
-            className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed px-4"
             variants={itemVariants}
           >
             We have built long-term partnerships with leading companies across multiple industries. 
@@ -166,7 +166,7 @@ const Clients = () => {
 
         {/* Stats Section */}
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16 md:mb-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -194,6 +194,7 @@ const Clients = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          style={{ contain: 'layout' }}
         >
           {clients.map((client) => (
             <motion.div
@@ -206,7 +207,7 @@ const Clients = () => {
               {/* Background glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"></div>
               
-              <div className="relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 group-hover:border-white/20 transition-all duration-300 h-full">
+              <div className="relative bg-white/5 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/10 group-hover:border-white/20 transition-all duration-300 h-full">
                 {/* Client Logo */}
                 <div className="flex items-center justify-center mb-6">
                   <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center p-4 group-hover:bg-white/20 transition-all duration-300">
@@ -217,6 +218,7 @@ const Clients = () => {
                         width={48}
                         height={48}
                         className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
                       />
                     ) : (
                       <Building2 className="w-10 h-10 text-orange-400" />
@@ -281,6 +283,7 @@ const Clients = () => {
                       width={80}
                       height={40}
                       className="w-full h-full object-contain"
+                      loading="lazy"
                     />
                   ) : (
                     <Building2 className="w-8 h-8 text-orange-400" />
@@ -299,27 +302,27 @@ const Clients = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-12 border border-white/10 relative overflow-hidden">
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 border border-white/10 relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
             
             <div className="relative z-10">
-              <h3 className="text-3xl font-bold text-white mb-4">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4 px-2">
                 Ready to Join Our Success Stories?
               </h3>
-              <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
                 Let&apos;s discuss your project requirements and see how we can help you achieve 
                 your engineering goals with our proven expertise and quality solutions.
               </p>
               <motion.a
                 href="#contact"
-                className="btn-primary text-lg px-8 py-4 inline-flex items-center gap-2 group"
+                className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 inline-flex items-center gap-2 group min-h-[44px]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 Start Your Project
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-200" />
               </motion.a>
             </div>
           </div>

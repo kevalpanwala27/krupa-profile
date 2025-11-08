@@ -120,27 +120,27 @@ const Industries = () => {
       <div className="container-balanced relative z-10">
         {/* Header Section */}
         <motion.div 
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 md:mb-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight px-2"
             variants={itemVariants}
           >
             Serving Multiple
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-emerald-500">
               Industries
             </span>
-            <span className="block text-2xl md:text-3xl text-slate-600 font-normal mt-4">
+            <span className="block text-xl sm:text-2xl md:text-3xl text-slate-600 font-normal mt-2 sm:mt-4">
               With Engineering Excellence
             </span>
           </motion.h2>
           
           <motion.p 
-            className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed px-4"
             variants={itemVariants}
           >
             Our expertise spans across diverse industrial sectors, providing specialized equipment and solutions 
@@ -175,6 +175,7 @@ const Industries = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          style={{ contain: 'layout' }}
         >
           {industries.map((industry, index) => (
                       <motion.div 
@@ -187,7 +188,7 @@ const Industries = () => {
               {/* Background glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-white rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"></div>
               
-              <div className="relative bg-white rounded-3xl p-8 shadow-sm border border-slate-100 group-hover:shadow-xl group-hover:border-slate-200 transition-all duration-300 h-full">
+              <div className="relative bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 group-hover:shadow-xl group-hover:border-slate-200 transition-all duration-300 h-full">
                 {/* Icon */}
                 <div className={`w-16 h-16 bg-gradient-to-br ${industry.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   <industry.icon className="w-8 h-8 text-white" />
@@ -218,33 +219,33 @@ const Industries = () => {
 
         {/* Call to Action */}
         <motion.div 
-          className="text-center mt-20"
+          className="text-center mt-12 sm:mt-16 md:mt-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-12 text-white relative overflow-hidden">
+          <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-white relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
             
             <div className="relative z-10">
-              <h3 className="text-3xl font-bold mb-4">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 px-2">
                 Not Seeing Your Industry?
                 </h3>
-              <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
                 We specialize in custom engineering solutions. Even if your industry isn&apos;t listed above, 
                 we can design and manufacture equipment tailored to your specific needs.
               </p>
               <motion.a
                 href="#contact"
-                className="btn-primary text-lg px-8 py-4 inline-flex items-center gap-2 group"
+                className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 inline-flex items-center gap-2 group min-h-[44px]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 Discuss Your Requirements
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-200" />
               </motion.a>
             </div>
           </div>
